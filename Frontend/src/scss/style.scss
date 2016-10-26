@@ -1,0 +1,157 @@
+$color-primary: #03A9F4;
+$color-secondary: #4FC3F7;
+$color-bright: #8BC34A;
+$color-white: #FCF7FF;
+$color-dark: #333333;
+
+.body {
+  background-color: $color-white;
+}
+
+.background-primary {
+  background: $color-primary !important;
+}
+
+$font-default: Rubik, helvetica, sans-serif;
+
+* {
+  font-family: $font-default;
+}
+
+.fullscreen {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+
+  min-width: 320px;
+  min-height: 480px;
+}
+
+.c {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.c.center {
+  justify-content: center;
+  @extend .c;
+}
+
+.c.left {
+  justify-content: left;
+  @extend .c;
+}
+
+.c.right {
+  justify-content: right;
+  @extend .c;
+}
+
+.r {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.r.center {
+  justify-content: center;
+  @extend .r;
+}
+
+.r.left {
+  justify-content: left;
+  @extend .r;
+}
+
+.r.right {
+  justify-content: right;
+  @extend .r;
+}
+
+.card {
+  border-radius: 3px;
+  background-color: $color-white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.initial {
+  .login-card {
+    height: 80%;
+    max-height: 600px;
+    width: 70%;
+    min-width: 300px;
+    max-width: 460px;
+    margin: auto;
+    padding: 12px;
+
+    .logo {
+      margin-top: 22px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 110px;
+    }
+    .logo-text {
+      font-family: Courgette, sans-serif;
+      font-size: 2em;
+      text-align: center;
+      font-weight: 200;
+      margin-top: 8px;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+    @extend .card, .c;
+  }
+}
+
+.labelinput {
+  .label {
+    font-size: 14px;
+    color: #aeaeae;
+    margin: 0;
+  }
+
+  input {
+    width: 340px;
+    margin: 0 auto;
+    display: block;
+    font-size: 18px;
+    padding: 4px 6px;
+    color: $color-dark;
+  }
+}
+
+.main {
+  overflow: hidden;
+  $info-height: 52px;
+  .container-map {
+    position: absolute;
+    top: 64px;
+    left: 0; right: 0; bottom: $info-height - 14;
+    overflow: scroll;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .box-info {
+    background: white;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: $info-height;
+    p {
+      font-size: 1.5em;
+      color: $color-dark;
+      font-weight: 700;
+      line-height: $info-height;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+}
