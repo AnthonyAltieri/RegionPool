@@ -47,18 +47,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Initial.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Frontend/src/components/Initial/Initial.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10">
-              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-              <folding>
-                <element signature="e#49#75#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Frontend/src/components/Dash/Main.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,7 +59,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dash.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Dash.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Frontend/src/components/Dash/Dash.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="432">
@@ -79,6 +67,16 @@
               <folding>
                 <element signature="e#49#75#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -183,6 +181,7 @@
         <option value="$PROJECT_DIR$/Frontend/src/actions/Drawer.js" />
         <option value="$PROJECT_DIR$/Frontend/src/components/Dash/Main.js" />
         <option value="$PROJECT_DIR$/Frontend/src/components/Dash/Dash.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -232,6 +231,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="RegionPool" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RegionPool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RegionPool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -561,12 +570,12 @@
       <updated>1477281010395</updated>
       <workItem from="1477281011672" duration="7453000" />
       <workItem from="1477454543611" duration="404000" />
-      <workItem from="1477494264380" duration="16253000" />
+      <workItem from="1477494264380" duration="16356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24110000" />
+    <option name="totallyTimeSpent" value="24213000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="720" height="873" extended-state="0" />
@@ -1205,6 +1214,14 @@
           <folding>
             <element signature="e#49#75#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
