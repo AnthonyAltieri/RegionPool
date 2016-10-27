@@ -13,6 +13,7 @@ import Main from './Dash/Main';
 import Destination from './Dash/Destination';
 import Waiting from './Dash/Waiting';
 import Boarding from './Dash/Boarding';
+import Finish from './Dash/Finish';
 
 class Root extends Component {
   render() {
@@ -30,6 +31,7 @@ class Root extends Component {
               <Route path="destination" component={Destination} />
               <Route path="waiting" component={Waiting} />
               <Route path="boarding" component={Boarding} />
+              <Route path="finish" component={Finish} />
             </Route>
           </Route>
         </Router>

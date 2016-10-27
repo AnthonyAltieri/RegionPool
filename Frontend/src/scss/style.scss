@@ -8,6 +8,7 @@ $color-secondary: #4FC3F7;
 $color-bright: #8BC34A;
 $color-white: white;
 $color-dark: #333333;
+$color-accent: #FF4081;
 
 .body {
   background-color: $color-white;
@@ -203,5 +204,20 @@ $font-default: Rubik, helvetica, sans-serif;
     @media #{$mobile} {
       font-size: 3.2em;
     };
+  }
+}
+
+.finish {
+  padding: 22px;
+
+  h3 {
+    font-weight: 300;
+    color: $color-accent;
+  }
+  input[type='checkbox'] {
+    width: 20px !important;
+    height: 20px !important;
+    display: inline-block;
+
   }
 }

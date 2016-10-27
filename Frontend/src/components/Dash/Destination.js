@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AutoComplete from 'material-ui/AutoComplete';
 import { toastr } from 'react-redux-toastr';
-import TextField from 'material-ui/TextField';
 import {
   Step,
   Stepper,
@@ -14,7 +13,6 @@ import {
   StepContent,
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import * as DestinationActions from '../../actions/Destination'
 import { push } from 'react-router-redux';
 
