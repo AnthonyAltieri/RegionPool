@@ -5,10 +5,12 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { toastr } from 'react-redux-toastr';
+import * as LoginActions from '../../actions/Login'
 
 
 const validEmail = (email) => {
@@ -33,6 +35,9 @@ const hasValidCredentials = (email = '', password = '', endLoading) => {
 let LoginCard = ({
   goToSignup,
   tryLogin,
+  isDialogOpen,
+  showDialog,
+  hideDialog,
 }) => {
   let email;
   let password;
@@ -43,6 +48,37 @@ let LoginCard = ({
         justifyContent: "space-between",
       }}
     >
+      <Dialog
+        title="Password recovery"
+        open={isDialogOpen}
+        actions={[
+          <FlatButton
+            label="Cancel"
+            secondary
+            onClick={() => {
+              hideDialog();
+            }}
+          />,
+          <FlatButton
+            label="Submit"
+            primary
+            keyboardFocused
+            onClick={() => {
+              toastr.success('Password recovery email sent.')
+              hideDialog();
+            }}
+          />
+        ]}
+      >
+        <div className="c center">
+          <p>
+            Enter an email to recover your password.
+          </p>
+          <TextField
+            floatingLabelText="Email"
+          />
+        </div>
+      </Dialog>
       <div className="c">
         <div
           className="c center"
@@ -88,12 +124,16 @@ let LoginCard = ({
       <FlatButton
         label="Forgot password"
         primary
+        onClick={() => {
+          showDialog();
+        }}
       />
     </div>
   );
 };
 
 const stateToProps = (state) => ({
+  isDialogOpen: !!state.Login.isDialogeOpen,
 });
 const dispatchToProps = (dispatch) => ({
   goToSignup: () => {
@@ -103,6 +143,12 @@ const dispatchToProps = (dispatch) => ({
     // if (hasValidCredentials(email, password)) {
     // }
     dispatch(push('/dash/main'));
+  },
+  showDialog: () => {
+    dispatch(LoginActions.showDialog());
+  },
+  hideDialog: () => {
+    dispatch(LoginActions.hideDialog());
   }
 });
 

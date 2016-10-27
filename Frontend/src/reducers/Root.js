@@ -8,10 +8,12 @@ import { routerReducer } from 'react-router-redux';
 import Drawer from './Drawer';
 import Destination from './Destination';
 import Finish from './Finish';
+import Login from './Login';
 
 const Root = combineReducers({
   toastr: Toastr,
   routing: routerReducer,
+  Login,
   Drawer,
   Destination,
   Finish
