@@ -3,12 +3,16 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { toastr } from 'react-redux-toastr';
+import { clearDestination } from '../../actions/Destination';
+import { push } from 'react-router-redux';
 
 class Boarding extends Component {
   render() {
+    const { goToDashDestination } = this.props;
     return (
       <div className="boarding fullscreen with-bar">
         <div
@@ -31,9 +35,8 @@ class Boarding extends Component {
             />
             <div className="c center">
               <h1
+                className="timer"
                 style={{
-                  padding: "22px 0",
-                  fontSize: "5em",
                 }}
               >
                 29s left
@@ -51,6 +54,7 @@ class Boarding extends Component {
                 label="Cancel Ride"
                 secondary
                 onClick={() => {
+                  goToDashDestination();
                 }}
               />
             </CardActions>
@@ -60,5 +64,17 @@ class Boarding extends Component {
     );
   }
 }
+const stateToProps = (state) => ({});
+const dispatchToProps = (dispatch) => ({
+  goToDashDestination: () => {
+    dispatch(clearDestination());
+    dispatch(push('/dash/destination'));
+  }
+});
+
+Boarding = connect(
+  stateToProps,
+  dispatchToProps
+)(Boarding);
 
 export default Boarding;

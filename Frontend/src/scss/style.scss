@@ -191,3 +191,15 @@ $font-default: Rubik, helvetica, sans-serif;
   }
 
 }
+
+.boarding {
+  .timer {
+    width: 100%;
+    padding: 22px 0;
+    font-size: 5em;
+    text-align: center;
+    @media #{$mobile} {
+      font-size: 3.2em;
+    };
+  }
+}
