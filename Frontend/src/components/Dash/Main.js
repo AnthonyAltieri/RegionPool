@@ -9,6 +9,7 @@ import FontIcon from 'material-ui/FontIcon';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 class Main extends Component {
+
   render() {
     const { goToDashDestination } = this.props;
 
@@ -44,6 +45,9 @@ const stateToProps = (state) => ({
 const dispatchToProps = (dispatch) => ({
   goToDashDestination: () => {
     dispatch(push('/dash/destination'));
+  },
+  closeDrawer: () => {
+    dispatch(DrawerActions.closeDrawer());
   }
 });
 

@@ -2,7 +2,7 @@
  * @author Anthony Altieri on 10/26/16.
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -14,101 +14,104 @@ import * as DrawerActions from '../../actions/Drawer'
 import Avatar from 'material-ui/Avatar';
 
 
-let Dash = ({
-  isDrawerOpen,
-  openDrawer,
-  closeDrawer,
-  logOut,
-  children
-}) => {
-  const name = 'Anthony Altieri';
-  return (
-    <div>
-      <Drawer
-        docked={false}
-        open={isDrawerOpen}
-        overlayClassName="drawer-overlay"
-      >
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexFlow: "row-reverse",
-          }}
+class Dash extends Component {
+  componentDidMount() {
+    const { closeDrawer } = this.props;
+    closeDrawer();
+  }
+
+  render() {
+    const { isDrawerOpen, openDrawer, closeDrawer,
+      logOut, children } = this.props;
+
+    const name = 'Anthony Altieri';
+    return (
+      <div>
+        <Drawer
+          docked={false}
+          open={isDrawerOpen}
+          overlayClassName="drawer-overlay"
         >
-          <IconButton
-            onClick={() => {
-              closeDrawer();
-            }}
-          >
-            <FontIcon
-              className="material-icons"
-            >
-              close
-            </FontIcon>
-          </IconButton>
-        </div>
-        <div className="c center">
-          <Avatar
-            size={100}
-            src={require('../../../img/anthony.png')}
-          />
-          <h3
+          <div
             style={{
-              fontWeight: "300",
-              fontSize: "1.8em",
-              marginTop: "8px",
-              marginBottom: "12px",
+              width: "100%",
+              display: "flex",
+              flexFlow: "row-reverse",
             }}
           >
-            {name}
-            </h3>
-        </div>
-
-        <MenuItem
-          leftIcon={
-            <FontIcon className="material-icons">
-              do_not_disturb
-            </FontIcon>
-          }
-          onClick={() => {
-            logOut();
-          }}
-        >
-          Log Out
-        </MenuItem>
-        {/*<MenuItem*/}
-          {/*leftIcon={*/}
-            {/*<FontIcon className="material-icons">*/}
-              {/*settings*/}
-            {/*</FontIcon>*/}
-          {/*}*/}
-        {/*>*/}
-          {/*Settings*/}
-        {/*</MenuItem>*/}
-      </Drawer>
-      <AppBar
-        title="RegionPool"
-        iconElementLeft={
-          <IconButton
-            onClick={() => {
-              openDrawer();
-            }}
-          >
-            <FontIcon
-              className="material-icons"
+            <IconButton
+              onClick={() => {
+                closeDrawer();
+              }}
             >
-              menu
-            </FontIcon>
-          </IconButton>
-        }
+              <FontIcon
+                className="material-icons"
+              >
+                close
+              </FontIcon>
+            </IconButton>
+          </div>
+          <div className="c center">
+            <Avatar
+              size={100}
+              src={require('../../../img/anthony.png')}
+            />
+            <h3
+              style={{
+                fontWeight: "300",
+                fontSize: "1.8em",
+                marginTop: "8px",
+                marginBottom: "12px",
+              }}
+            >
+              {name}
+            </h3>
+          </div>
 
-      />
-      {children}
-    </div>
+          <MenuItem
+            leftIcon={
+              <FontIcon className="material-icons">
+                do_not_disturb
+              </FontIcon>
+            }
+            onClick={() => {
+              logOut();
+            }}
+          >
+            Log Out
+          </MenuItem>
+          {/*<MenuItem*/}
+          {/*leftIcon={*/}
+          {/*<FontIcon className="material-icons">*/}
+          {/*settings*/}
+          {/*</FontIcon>*/}
+          {/*}*/}
+          {/*>*/}
+          {/*Settings*/}
+          {/*</MenuItem>*/}
+        </Drawer>
+        <AppBar
+          title="RegionPool"
+          iconElementLeft={
+            <IconButton
+              onClick={() => {
+                openDrawer();
+              }}
+            >
+              <FontIcon
+                className="material-icons"
+              >
+                menu
+              </FontIcon>
+            </IconButton>
+          }
 
-  );
-};
+        />
+        {children}
+      </div>
+    );
+  }
+}
 const stateToProps = (state) => ({
   isDrawerOpen: state.Drawer,
 });
