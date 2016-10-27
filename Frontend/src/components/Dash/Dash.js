@@ -72,15 +72,15 @@ let Dash = ({
         >
           Log Out
         </MenuItem>
-        <MenuItem
-          leftIcon={
-            <FontIcon className="material-icons">
-              settings
-            </FontIcon>
-          }
-        >
-          Settings
-        </MenuItem>
+        {/*<MenuItem*/}
+          {/*leftIcon={*/}
+            {/*<FontIcon className="material-icons">*/}
+              {/*settings*/}
+            {/*</FontIcon>*/}
+          {/*}*/}
+        {/*>*/}
+          {/*Settings*/}
+        {/*</MenuItem>*/}
       </Drawer>
       <AppBar
         title="RegionPool"
