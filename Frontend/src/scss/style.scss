@@ -6,7 +6,7 @@ $mobile: "(max-width: 767px)";
 $color-primary: #03A9F4;
 $color-secondary: #4FC3F7;
 $color-bright: #8BC34A;
-$color-white: #FCF7FF;
+$color-white: white;
 $color-dark: #333333;
 
 .body {
@@ -185,6 +185,7 @@ $font-default: Rubik, helvetica, sans-serif;
 }
 
 .waiting {
+  background-color: #eeeeee;
   padding: 42px;
   @media #{$mobile} {
     padding: 0;
@@ -193,6 +194,7 @@ $font-default: Rubik, helvetica, sans-serif;
 }
 
 .boarding {
+  background-color: #eeeeee;
   .timer {
     width: 100%;
     padding: 22px 0;

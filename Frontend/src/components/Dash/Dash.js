@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import * as DrawerActions from '../../actions/Drawer'
 import Avatar from 'material-ui/Avatar';
 
@@ -17,6 +18,7 @@ let Dash = ({
   isDrawerOpen,
   openDrawer,
   closeDrawer,
+  logOut,
   children
 }) => {
   const name = 'Anthony Altieri';
@@ -69,6 +71,9 @@ let Dash = ({
               do_not_disturb
             </FontIcon>
           }
+          onClick={() => {
+            logOut();
+          }}
         >
           Log Out
         </MenuItem>
@@ -116,6 +121,9 @@ const dispatchToProps = (dispatch) => ({
   },
   closeDrawer: () => {
     dispatch(DrawerActions.closeDrawer());
+  },
+  logOut: () => {
+    dispatch(push('/login'));
   }
 });
 
