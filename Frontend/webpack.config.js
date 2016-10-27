@@ -21,7 +21,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'RegionPool',
-      filename: 'index.html',
+      filename: 'Index.html',
       template: 'template.ejs'
     }),
     new webpack.HotModuleReplacementPlugin(),
