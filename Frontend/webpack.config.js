@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var DashboardPlugin = require('webpack-dashboard/plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 var babelPresets = {presets: ['react', 'es2015', 'stage-2']};
@@ -18,6 +19,11 @@ module.exports = {
   },
   devtool: 'eval-source-map',
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'RegionPool',
+      filename: 'index.html',
+      template: 'template.ejs'
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new DashboardPlugin()
   ],

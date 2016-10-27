@@ -21,6 +21,14 @@ db.once('open', function() {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/static', express.static(path.join(__dirname, '../../Frontend/dist')));
+
+app.get('/', (req, res) => {
+  console.log('__dirname', __dirname);
+  console.log(path.join(__dirname, '../../Frontend/index.html'));
+  res.sendFile(path.join(__dirname, '../../Frontend/index.html'));
+});
+
 app.listen(PORT, function() {
   console.log('listening on port ' + PORT);
 });

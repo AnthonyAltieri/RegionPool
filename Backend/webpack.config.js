@@ -19,6 +19,9 @@ fs.readdirSync('node_modules')
 
 module.exports = {
   entry: './src/server',
+  node: {
+    __dirname: false,
+  },
   target: 'node',
   output: {
     path: path.join(__dirname, 'dist'),
