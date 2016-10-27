@@ -171,6 +171,9 @@ $font-default: Rubik, helvetica, sans-serif;
 
 .destination {
   padding: 22px;
+  @media #{$mobile} {
+    padding: 0;
+  }
   .input {
     width: 100% !important;
     max-width: 600px;
