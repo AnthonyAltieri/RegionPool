@@ -31,8 +31,6 @@ const muiTheme = getMuiTheme({
     pickerHeaderColor: lightBlue500,
     clockCircleColor: fade(darkBlack, 0.07),
     shadowColor: fullBlack,
-
-
   },
   fontFamily: 'Rubik, sans-serif',
   appbar: {

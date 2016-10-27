@@ -35,6 +35,11 @@ $font-default: Rubik, helvetica, sans-serif;
   min-height: 480px;
 }
 
+.fullscreen.with-bar {
+  top: 62px !important;
+  @extend .fullscreen;
+}
+
 .c {
   display: flex;
   flex-flow: column;
@@ -68,12 +73,12 @@ $font-default: Rubik, helvetica, sans-serif;
 }
 
 .r.left {
-  justify-content: left;
+  justify-content: flex-start;
   @extend .r;
 }
 
 .r.right {
-  justify-content: right;
+  justify-content: flex-end;
   @extend .r;
 }
 
@@ -161,6 +166,25 @@ $font-default: Rubik, helvetica, sans-serif;
         font-size: 0.9em;
       }
     }
+  }
+}
+
+.destination {
+  padding: 22px;
+  .input {
+    width: 100% !important;
+    max-width: 600px;
+  }
+
+  .autocomplete-crossstreet > * {
+    padding: 0 !important;
+  }
+}
+
+.waiting {
+  padding: 42px;
+  @media #{$mobile} {
+    padding: 0;
   }
 
 }

@@ -10,6 +10,8 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import { connect } from 'react-redux';
 import * as DrawerActions from '../../actions/Drawer'
+import Avatar from 'material-ui/Avatar';
+
 
 let Dash = ({
   isDrawerOpen,
@@ -17,6 +19,7 @@ let Dash = ({
   closeDrawer,
   children
 }) => {
+  const name = 'Anthony Altieri';
   return (
     <div>
       <Drawer
@@ -43,6 +46,41 @@ let Dash = ({
             </FontIcon>
           </IconButton>
         </div>
+        <div className="c center">
+          <Avatar
+            size={100}
+            src={require('../../../img/anthony.png')}
+          />
+          <h3
+            style={{
+              fontWeight: "300",
+              fontSize: "1.8em",
+              marginTop: "8px",
+              marginBottom: "12px",
+            }}
+          >
+            {name}
+            </h3>
+        </div>
+
+        <MenuItem
+          leftIcon={
+            <FontIcon className="material-icons">
+              do_not_disturb
+            </FontIcon>
+          }
+        >
+          Log Out
+        </MenuItem>
+        <MenuItem
+          leftIcon={
+            <FontIcon className="material-icons">
+              settings
+            </FontIcon>
+          }
+        >
+          Settings
+        </MenuItem>
       </Drawer>
       <AppBar
         title="RegionPool"
