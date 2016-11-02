@@ -15,6 +15,7 @@ const User = model('users', UserSchema);
 const router = Router();
 router.post('/signUp', signUp);
 router.post('/logIn', logIn);
+router.post('/logOut', logOut);
 router.post('/photo/upload', photoUpload);
 
 function signUp(req, res) {
@@ -93,6 +94,34 @@ function logIn(req, res) {
       });
     })
     .catch((error) => { res.error(error) })
+}
+
+function logOut(req, res) {
+  const { userId } = req.session;
+  if (!userId) {
+    res.success();
+    return
+  }
+  db.findById(userId, User)
+    .then((user) => {
+      user.loggedIn = false;
+      db.save(user)
+        .then((user) => {
+          req.session.destroy((error) => {
+            if (error) {
+              res.error(error);
+              return
+            }
+            res.success()
+          })
+        })
+        .catch((error) => { res.error(error) })
+    })
+    .catch((error) => { res.error(error) })
+}
+
+// TODO: implement
+function photoUpload(req, res) {
 }
 
 function encryptPassword(email, password) {
