@@ -11,6 +11,10 @@ const User = new Schema({
   email: String,
   loggedIn: Boolean,
   phoneNumber: String,
+  picture: {
+    data: Buffer,
+    contentType: String,
+  }
 });
 
 export default User;
