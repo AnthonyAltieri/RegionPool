@@ -22,9 +22,8 @@ class Dash extends Component {
 
   render() {
     const { isDrawerOpen, openDrawer, closeDrawer,
-      logOut, children } = this.props;
+      logOut, children, name } = this.props;
 
-    const name = 'Anthony Altieri';
     return (
       <div>
         <Drawer
@@ -114,6 +113,7 @@ class Dash extends Component {
 }
 const stateToProps = (state) => ({
   isDrawerOpen: state.Drawer,
+  name: `${state.User.firstName} ${state.User.lastName}`,
 });
 const dispatchToProps = (dispatch) => ({
   openDrawer: () => {

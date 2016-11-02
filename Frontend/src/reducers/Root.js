@@ -9,6 +9,7 @@ import Drawer from './Drawer';
 import Destination from './Destination';
 import Finish from './Finish';
 import Login from './Login';
+import User from './User';
 
 const Root = combineReducers({
   toastr: Toastr,
@@ -16,8 +17,8 @@ const Root = combineReducers({
   Login,
   Drawer,
   Destination,
-  Finish
-
+  Finish,
+  User,
 });
 
 export default Root;
