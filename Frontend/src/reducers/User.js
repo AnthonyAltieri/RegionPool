@@ -13,6 +13,13 @@ const User = (state = {}, action) => {
       }
     }
 
+    case 'RETRIEVED_CURRENT_LOCATION': {
+      return {
+        lat: action.lat,
+        long: action.long,
+      }
+    }
+
     default: {
       return state;
     }

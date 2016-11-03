@@ -9,12 +9,43 @@ import { clearDestination } from '../../actions/Destination';
 import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 import { toastr } from 'react-redux-toastr';
+import WaitingMap from '../Maps/WaitingMap';
+
+const cSToCoords = {
+  'a st and 1st ave': {
+    lat: 32.718841,
+    lng: -117.163896
+  },
+  'kettner blvd and w ash st': {
+    lat: 32.719866,
+    lng: -117.169186,
+  },
+  'missouri st and ingaham st': {
+    lat: 32.803509,
+    lng: -117.242041,
+  },
+  'chalcedony st and lamont st': {
+    lat: 32.805668,
+    lng: -117.236782,
+  },
+  'jewell st and law st': {
+    lat: 32.805786,
+    lng: -117.240718,
+  }
+};
+
 
 class Waiting extends Component {
 
   render() {
 
-    const { goToDashDestination } = this.props;
+
+    const { goToDashDestination, goToDashInRide } = this.props;
+
+    setTimeout(() => {
+      goToDashInRide();
+
+    }, 10000);
 
     const temporaryDriverName = 'John Smith';
     const isDriverMale = true;
@@ -53,9 +84,7 @@ class Waiting extends Component {
               mediaStyle={{
               }}
             >
-              <img
-                src={require('../../../img/driverInc.png')}
-              />
+              <WaitingMap />
             </CardMedia>
             <CardActions>
               <FlatButton
@@ -80,11 +109,17 @@ class Waiting extends Component {
   }
 }
 
-const stateToProps = (state) => ({});
+const stateToProps = (state) => ({
+  crossStreet: state.Destination.crossStreet,
+  coords: cSToCoords[state.Destination.crossStreet.toLowerCase()],
+});
 const dispatchToProps = (dispatch) => ({
   goToDashDestination: () => {
     dispatch(clearDestination());
     dispatch(push('/dash/destination'));
+  },
+  goToDashInRide: () => {
+    dispatch(push('/dash/inRide'));
   }
 });
 

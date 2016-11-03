@@ -17,28 +17,21 @@ import * as DestinationActions from '../../actions/Destination'
 import { push } from 'react-router-redux';
 
 const cities = [
-  'Mira Mesa', 'La Jolla', 'Hillcrest', 'North Park'
+  'San Diego', 'Pacific Beach'
 ];
 const crossStreets = {
-  'mira mesa': [
-    'Reagan Rd and Mira Mesa Blvd',
-    'Black Mountain Rd and Gold Coast Dr',
-    'Menkar Rd and Westonhill Dr',
+  'san diego': [
+    'A St and 1st Ave',
+    'Kettner Blvd and W Ash St'
   ],
-  'la jolla': [
-    'Nobel Dr and Villa La Jolla Dr',
-    'Avenida Da La Playa and La Jolla Shores Dr',
-    'La Jolla Cove and Wall St',
-    'La Jolla Blvd and La Canada',
-  ],
-  'lillcrest': [
-    'University Ave and Fourth Ave',
-    'Richmond St and Brookes Ave',
-  ],
-  'north park': [
-    'University Ave and Grim Ave',
-    'Redwood St and 30th St',
-    '30th St and Adams Ave',
+  // 'la jolla': [
+  //   'Villa La Jolla Dr and Gilman Dr',
+  //   'La Jolla Village Dr and Lebon Dr',
+  // ],
+  'pacific beach': [
+    'Missouri St and Ingaham St',
+    'Chalcedony St and Lamont St',
+    'Jewell St and Law St',
   ],
 };
 

@@ -4,13 +4,13 @@
 
 import db from '../db';
 import UserSchema from '../schemas/User'
-import { Router, model } from 'express';
+import { Router } from 'express';
+import mongoose from 'mongoose';
 import md5 from '../../node_modules/blueimp-md5/js/md5.min'
 import fs from 'fs';
 const SALT = 'Altieri';
 
-
-const User = model('users', UserSchema);
+const User = mongoose.model('users', UserSchema);
 
 const router = Router();
 router.post('/signUp', signUp);
@@ -128,4 +128,4 @@ function encryptPassword(email, password) {
   return md5(password, null, true) + email + SALT;
 }
 
-export default router;
+module.exports = router;

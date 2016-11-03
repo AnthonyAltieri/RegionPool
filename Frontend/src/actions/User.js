@@ -16,3 +16,9 @@ export const signedUp = (id, firstName, lastName) => ({
   firstName,
   lastName,
 });
+
+export const retrievedCurrentLocation = (lat, long) => ({
+  type: 'RETRIEVED_CURRENT_LOCATION',
+  lat,
+  long,
+});

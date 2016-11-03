@@ -35,9 +35,10 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/static/img', express.static(path.join(__dirname, '../../Frontend/img')));
 app.use('/static', express.static(path.join(__dirname, '../../Frontend/dist')));
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   console.log('__dirname', __dirname);
   console.log(path.join(__dirname, '../../Frontend/index.html'));
   res.sendFile(path.join(__dirname, '../../Frontend/index.html'));

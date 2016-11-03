@@ -7,22 +7,48 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import FontIcon from 'material-ui/FontIcon';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import * as UserActions from '../../actions/User';
+import MainMap from '../Maps/MainMap';
 
 class Main extends Component {
+  componentDidMount() {
+    const { retrievedCurrentLocation } = this.props;
+    // TODO: handle no geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log('position.coords', position.coords)
+        retrievedCurrentLocation(
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+      });
+    }
+
+  }
 
   render() {
-    const { goToDashDestination } = this.props;
+    const { goToDashDestination, curLat, curLong,
+    } = this.props;
 
     return (
       <div className="main fullscreen">
-        <div className="container-map">
-          <img src={require('../../../img/map.png')} />
+        <MainMap
+          lat={curLat}
+          lng={curLong}
+        />
+        <div
+          className="box-info"
+          style={{
+            backgroundColor: "#76FF03",
+          }}
+        >
+          <p>You are inside a pick up region</p>
         </div>
         <FloatingActionButton
           style={{
             position: "absolute",
             bottom: "64px",
-            right: "12px",
+            right: "42px",
           }}
           onClick={() => {
             goToDashDestination();
@@ -30,16 +56,14 @@ class Main extends Component {
         >
           <FontIcon className="material-icons">directions_bus</FontIcon>
         </FloatingActionButton>
-        <div className="box-info">
-          <p>0.2 miles from nearest pick-up region</p>
-        </div>
-
       </div>
     );
   }
 }
 
 const stateToProps = (state) => ({
+  curLat: state.User.lat,
+  curLong: state.User.long,
 });
 
 const dispatchToProps = (dispatch) => ({
@@ -48,6 +72,9 @@ const dispatchToProps = (dispatch) => ({
   },
   closeDrawer: () => {
     dispatch(DrawerActions.closeDrawer());
+  },
+  retrievedCurrentLocation: (lat, long) => {
+    dispatch(UserActions.retrievedCurrentLocation(lat, long));
   }
 });
 
