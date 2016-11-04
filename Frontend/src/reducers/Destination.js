@@ -48,6 +48,12 @@ const Destination = (state = initialState, action) => {
     case 'CLEAR_DESTINATION': {
       return {}
     }
+    case 'RETRIEVED_CROSS_STREETS_DATA': {
+      return {
+        ...state,
+        crossStreetsData: action.crossStreetsData,
+      }
+    }
 
     default: {
       return state;

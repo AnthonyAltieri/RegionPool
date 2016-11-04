@@ -10,6 +10,8 @@ import Destination from './Destination';
 import Finish from './Finish';
 import Login from './Login';
 import User from './User';
+import Boarding from './Boarding';
+import Loading from './Loading';
 
 const Root = combineReducers({
   toastr: Toastr,
@@ -19,6 +21,8 @@ const Root = combineReducers({
   Destination,
   Finish,
   User,
+  Boarding,
+  Loading,
 });
 
 export default Root;

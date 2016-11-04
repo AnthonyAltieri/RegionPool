@@ -40,10 +40,10 @@ class Waiting extends Component {
   render() {
 
 
-    const { goToDashDestination, goToDashInRide } = this.props;
+    const { goToDashDestination, goToDashBoarding } = this.props;
 
     setTimeout(() => {
-      goToDashInRide();
+      goToDashBoarding();
 
     }, 10000);
 
@@ -51,7 +51,7 @@ class Waiting extends Component {
     const isDriverMale = true;
     const stars = 4.2;
     const title = `${temporaryDriverName} is on ${isDriverMale ? 'his' : 'her'} way`;
-    const estimatedMin = 8;
+    const estimatedMin = 1;
 
     return (
       <div className="waiting fullscreen with-bar">
@@ -118,8 +118,8 @@ const dispatchToProps = (dispatch) => ({
     dispatch(clearDestination());
     dispatch(push('/dash/destination'));
   },
-  goToDashInRide: () => {
-    dispatch(push('/dash/inRide'));
+  goToDashBoarding: () => {
+    dispatch(push('/dash/boarding'));
   }
 });
 

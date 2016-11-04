@@ -6,7 +6,7 @@ import db from '../db';
 import UserSchema from '../schemas/User'
 import { Router } from 'express';
 import mongoose from 'mongoose';
-import md5 from '../../node_modules/blueimp-md5/js/md5.min'
+import md5 from '../../node_modules/blueimp-md5/js/md5';
 import fs from 'fs';
 const SALT = 'Altieri';
 

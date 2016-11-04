@@ -45,3 +45,8 @@ export const clearDestination = () => ({
   type: 'CLEAR_DESTINATION',
 });
 
+export const retrievedCrossStreetsData = (crossStreetsData) => ({
+  type: 'RETRIEVED_CROSS_STREETS_DATA',
+  crossStreetsData,
+});
+

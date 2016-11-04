@@ -1,0 +1,15 @@
+ {
+   "san diego": [
+     "A St and 1st Ave",
+     "Kettner Blvd and W Ash St"
+   ],
+   "la jolla": [
+     "Villa La Jolla Dr and Gilman Dr",
+     "La Jolla Village Dr and Lebon Dr"
+   ],
+   "pacific beach": [
+     "Missouri St and Ingaham St",
+     "Chalcedony St and Lamont St",
+     "Jewell St and Law St"
+   ]
+ }

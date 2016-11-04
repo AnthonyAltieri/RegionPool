@@ -14,6 +14,7 @@ import Destination from './Dash/Destination';
 import Waiting from './Dash/Waiting';
 import Boarding from './Dash/Boarding';
 import Finish from './Dash/Finish';
+import InRide from './Dash/InRide';
 
 class Root extends Component {
   render() {
@@ -32,6 +33,7 @@ class Root extends Component {
               <Route path="waiting" component={Waiting} />
               <Route path="boarding" component={Boarding} />
               <Route path="finish" component={Finish} />
+              <Route path="inRide" component={InRide} />
             </Route>
           </Route>
         </Router>

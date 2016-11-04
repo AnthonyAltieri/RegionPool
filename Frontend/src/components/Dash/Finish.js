@@ -42,7 +42,7 @@ const Star = ({
 
 class Finish extends Component {
   render() {
-    const { setStars, stars, goToDashMain } = this.props;
+    const { setStars, stars, crossStreet, goToDashMain } = this.props;
 
     const crossStreets = 'Nobel Dr and Villa La Jolla Dr';
     const driver = 'John Smith';
@@ -50,7 +50,7 @@ class Finish extends Component {
     return (
       <div className="finish">
         <h3>You have arrived at</h3>
-        <h1>{crossStreets}</h1>
+        <h1>{crossStreet}</h1>
         <Divider />
         <h3>Your trip took</h3>
         <h1>20 minutes</h1>
@@ -150,6 +150,7 @@ class Finish extends Component {
 
 const stateToProps = (state) => ({
   stars: state.Finish.stars || 0,
+  crossStreet: state.Destination.crossStreet,
 });
 const dispatchToProps = (dispatch) => ({
   setStars: (stars) => {

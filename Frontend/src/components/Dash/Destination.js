@@ -15,6 +15,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import * as DestinationActions from '../../actions/Destination'
 import { push } from 'react-router-redux';
+import { getCrossStreets } from '../../api/Destination';
 
 const cities = [
   'San Diego', 'Pacific Beach'
@@ -24,10 +25,10 @@ const crossStreets = {
     'A St and 1st Ave',
     'Kettner Blvd and W Ash St'
   ],
-  // 'la jolla': [
-  //   'Villa La Jolla Dr and Gilman Dr',
-  //   'La Jolla Village Dr and Lebon Dr',
-  // ],
+  'la jolla': [
+    'Villa La Jolla Dr and Gilman Dr',
+    'La Jolla Village Dr and Lebon Dr',
+  ],
   'pacific beach': [
     'Missouri St and Ingaham St',
     'Chalcedony St and Lamont St',
@@ -38,19 +39,34 @@ const crossStreets = {
 
 class Destination extends Component {
   componentDidMount() {
-    const { activateStep } = this.props;
+    const { activateStep, retrievedCrossStreetsData } = this.props;
     activateStep(1);
+    getCrossStreets()
+      .then((data) => {
+        try {
+          retrievedCrossStreetsData(JSON.parse(JSON.parse(data)))
+        } catch (e) {
+
+        }
+      })
+      .catch((error) => {
+        toastr.error('Network Error', 'Please refresh the page');
+      })
+
   }
 
   render() {
-    const { step, activateStep, crossStreetsData,
+    const { step, activateStep,
       enteredCrossStreet, removedCrossStreet, enteredCity,
       goToDashWaiting, savedCity, savedCrossStreet,
+      crossStreetsData,
     } = this.props;
     console.log('step', step);
 
+
     let city;
     let crossStreet;
+
 
     const attemptToGoStepTwo = () => {
       const entry = city.state.searchText;
@@ -60,6 +76,7 @@ class Destination extends Component {
         return;
       }
       enteredCity(match);
+      this.forceUpdate();
       activateStep(2);
     };
 
@@ -143,7 +160,7 @@ class Destination extends Component {
                     maxWidth: "600px",
                   }}
                   filter={AutoComplete.caseInsensitiveFilter}
-                  dataSource={crossStreetsData}
+                  dataSource={crossStreetsData || []}
                   ref={(n) => {
                     crossStreet = n;
                   }}
@@ -234,12 +251,13 @@ class Destination extends Component {
 
 const stateToProps = (state) => ({
   step: state.Destination.step,
-  crossStreetsData: !!state.Destination.city
-    ? crossStreets[state.Destination.city.toLowerCase()] || []
-    : []
-  ,
   savedCity: state.Destination.city,
   savedCrossStreet: state.Destination.crossStreet,
+  crossStreetsData: !!state.Destination.city
+    ? state
+      .Destination
+      .crossStreetsData[state.Destination.city.toLowerCase()] || []
+    : [],
 });
 
 const dispatchToProps = (dispatch) => ({
@@ -254,6 +272,12 @@ const dispatchToProps = (dispatch) => ({
   },
   removedCrossStreet: () => {
     dispatch(DestinationActions.removedCrossStreet());
+  },
+  retrievedCrossStreetsData: (crossStreetsData) => {
+    dispatch(
+      DestinationActions
+        .retrievedCrossStreetsData(crossStreetsData)
+    )
   },
   goToDashWaiting: () => {
     dispatch(push('/dash/waiting'));

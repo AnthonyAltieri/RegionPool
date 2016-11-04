@@ -3,6 +3,7 @@
  */
 
 const SERVER_PREFIX = 'http://35.161.34.206';
+const LOCAL_PREFIX = 'http://localhost:4040';
 
 export const post = (url, params = {}) => {
   return new Promise((resolve, reject) => {
@@ -16,7 +17,7 @@ export const send = (type, url, params = {}, withCredentials = false)  => {
   console.log('send()')
   return new Promise((resolve, reject) => {
     const ajax = new XMLHttpRequest();
-    ajax.open(type, SERVER_PREFIX + url, true);
+    ajax.open(type, LOCAL_PREFIX + url, true);
     ajax.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     ajax.withCredentials = withCredentials;
     ajax.onreadystatechange = () => {
@@ -44,7 +45,7 @@ export const send = (type, url, params = {}, withCredentials = false)  => {
 
       else {
         try {
-          const payload = JSON.stringify(ajax.payload);
+          const payload = JSON.stringify(ajax.response);
           resolve({
             code: ajax.status,
             payload,

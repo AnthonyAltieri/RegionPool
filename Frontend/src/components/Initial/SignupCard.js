@@ -11,6 +11,8 @@ import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { toastr } from 'react-redux-toastr';
+import { signUp } from '../../api/User';
+import * as UserActions from '../../actions/User'
 
 
 const validEmail = (email) => {
@@ -18,7 +20,16 @@ const validEmail = (email) => {
   return regex.test(email);
 };
 
-const hasValidCredentials = (email = '', password = '', endLoading) => {
+const hasValidCredentials = (
+  email = '',
+  password = '',
+  firstName = '',
+  lastName = ''
+) => {
+  console.log('email', email);
+  console.log('password', password);
+  console.log('firstName', firstName);
+  console.log('lastName', lastName);
   if (!validEmail(email)) {
     toastr.error('Credential Error', 'Enter a valid email.');
     return false;
@@ -29,14 +40,26 @@ const hasValidCredentials = (email = '', password = '', endLoading) => {
     return false;
   }
 
+  if (!firstName.trim()) {
+    toastr.error('Credential Error', 'Enter a valid first name');
+  }
+
+  if (!lastName.trim()) {
+    toastr.error('Credential Error', 'Enter a valid last name');
+  }
+
   return true;
 };
 
 let LoginCard = ({
   goToLogin,
+  goToDashMain,
+  signedUp,
 }) => {
   let email;
   let password;
+  let firstName;
+  let lastName;
   return (
     <div
       className="login-card"
@@ -69,18 +92,57 @@ let LoginCard = ({
       >
         <TextField
           floatingLabelText="Email"
-          value={email}
+          onChange={(event) => {
+            email = event.target.value;
+          }}
+        />
+        <TextField
+          floatingLabelText="First name"
+          type="text"
+          onChange={(event) => {
+            firstName = event.target.value;
+          }}
+        />
+        <TextField
+          floatingLabelText="Last Name"
+          type="text"
+          onChange={(event) => {
+            lastName = event.target.value;
+          }}
         />
         <TextField
           floatingLabelText="Password"
           type="password"
-          value={password}
+          onChange={(event) => {
+            password = event.target.value;
+          }}
         />
         <br />
         <br />
         <RaisedButton
           label={'Submit'}
           onClick={() => {
+            if (hasValidCredentials(email, password, firstName, lastName)) {
+              signUp(email, password, firstName, lastName)
+                .then((payload) => {
+                  const { error, inUse, firstName, lastName } = payload;
+                  if (!!error) {
+                    toastr.error('Something went wrong please try again')
+                    return;
+                  }
+                  if (!!inUse) {
+                    toastr.info('That email is already in use');
+                    return;
+                  }
+                  signedUp(firstName, lastName);
+                  toastr.success('Signed up successfully');
+                  goToDashMain();
+                })
+                .catch((error) => {
+                  console.log('ERROR: ', error);
+                  toastr.error('Something went wrong please try again')
+                })
+            }
           }}
           fullWidth
           secondary
@@ -96,6 +158,12 @@ const dispatchToProps = (dispatch) => ({
   goToLogin: () => {
     dispatch(push('/login'));
   },
+  signedUp: (firstName, lastName) => {
+    dispatch(UserActions.signedUp(firstName, lastName));
+  },
+  goToDashMain: () => {
+    dispatch(push('/dash/main'));
+  }
 });
 
 LoginCard = connect(

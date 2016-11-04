@@ -13,16 +13,18 @@ import MainMap from '../Maps/MainMap';
 class Main extends Component {
   componentDidMount() {
     const { retrievedCurrentLocation } = this.props;
-    // TODO: handle no geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log('position.coords', position.coords)
         retrievedCurrentLocation(
           position.coords.latitude,
           position.coords.longitude,
         );
       });
+      return;
     }
+    // TODO: Fix the temporary solution
+    toastr.error('You do not have a browser that support location,' +
+      'you must use a browser that does to use this application.');
 
   }
 

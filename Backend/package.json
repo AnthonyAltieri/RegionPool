@@ -10,10 +10,11 @@
   "author": "Anthony Altieri",
   "license": "UNLICENSED",
   "dependencies": {
-    "blueimp-md5": "^2.4.0",
+    "blueimp-md5": "^2.5.0",
     "body-parser": "^1.15.2",
     "express-session": "^1.14.1",
-    "mongoose": "^4.6.5",
+    "jsonfile": "^2.4.0",
+    "mongoose": "latest",
     "react": "^15.3.2"
   },
   "devDependencies": {
@@ -30,7 +31,6 @@
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
-    "mongoose": "^4.6.5",
     "node-sass": "^3.9.0"
   }
 }

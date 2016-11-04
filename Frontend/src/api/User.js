@@ -6,7 +6,7 @@ import { post } from './Ajax';
 
 export const logIn = (email, password)  => {
     return new Promise((resolve, reject) => {
-        post('/logIn', { email, password })
+        post('/api/user/logIn', { email, password })
           .then((payload) => {
             if (!payload || payload.error) {
               resolve(null);
@@ -19,9 +19,9 @@ export const logIn = (email, password)  => {
 };
 
 
-export const signUp = (firstName, lastName, email, password) => {
+export const signUp = (email, password, firstName, lastName) => {
   return new Promise((resolve, reject) => {
-    post('/signUp', { firstName, lastName, email, password })
+    post('/api/user/signUp', { firstName, lastName, email, password })
       .then((payload) => {
         const { error, inUse } = payload;
         if (!!error) {

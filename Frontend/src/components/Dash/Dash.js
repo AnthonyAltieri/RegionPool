@@ -53,7 +53,7 @@ class Dash extends Component {
           <div className="c center">
             <Avatar
               size={100}
-              src={require('../../../img/anthony.png')}
+              src={require('../../../img/person-placeholder.png')}
             />
             <h3
               style={{

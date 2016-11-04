@@ -2,11 +2,12 @@
  * @author Anthony Altieri on 10/23/16.
  */
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const session = require('express-session');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import session from 'express-session';
+import fs from 'fs';
+import mongoose from 'mongoose';
 const MongoStore = require('connect-mongo/es5')(session);
 const app = express();
 const PORT = 4040;
@@ -32,11 +33,24 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, *');
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/static/img', express.static(path.join(__dirname, '../../Frontend/img')));
 app.use('/static', express.static(path.join(__dirname, '../../Frontend/dist')));
+
+app.post('/data.json', (req, res) => {
+  const json = fs.readFileSync(path.join(__dirname, '../data.json'));
+  res.send(json);
+});
 
 app.get('/*', (req, res) => {
   console.log('__dirname', __dirname);

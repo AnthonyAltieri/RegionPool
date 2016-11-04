@@ -9,10 +9,28 @@ import FlatButton from 'material-ui/FlatButton';
 import { toastr } from 'react-redux-toastr';
 import { clearDestination } from '../../actions/Destination';
 import { push } from 'react-router-redux';
+import * as BoardingActions from '../../actions/Boarding';
 
 class Boarding extends Component {
+  componentDidMount() {
+    const { startTimer, decrementTimer, } = this.props;
+    startTimer();
+
+    const ONE_SECOND = 1000;
+    this.timerInterval = window.setInterval(() => {
+      decrementTimer();
+    }, ONE_SECOND);
+
+  }
   render() {
-    const { goToDashDestination } = this.props;
+    const { goToDashDestination, timer, goToDashInRide
+    } = this.props;
+
+    if (timer === 45) {
+      clearInterval(this.timerInterval)
+      goToDashInRide();
+    }
+
     return (
       <div className="boarding fullscreen with-bar">
         <div
@@ -39,7 +57,7 @@ class Boarding extends Component {
                 style={{
                 }}
               >
-                29s left
+                {timer}s left
               </h1>
             </div>
             <CardActions>
@@ -64,11 +82,22 @@ class Boarding extends Component {
     );
   }
 }
-const stateToProps = (state) => ({});
+const stateToProps = (state) => ({
+  timer: state.Boarding.timer || 60,
+});
 const dispatchToProps = (dispatch) => ({
   goToDashDestination: () => {
     dispatch(clearDestination());
     dispatch(push('/dash/destination'));
+  },
+  startTimer: () => {
+    dispatch(BoardingActions.startTimer());
+  },
+  decrementTimer: () => {
+    dispatch(BoardingActions.decrementTimer());
+  },
+  goToDashInRide: () => {
+    dispatch(push('/dash/inRide'));
   }
 });
 
