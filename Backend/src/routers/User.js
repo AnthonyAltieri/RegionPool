@@ -79,7 +79,7 @@ function logIn(req, res) {
   })
     .then((user) => {
       if (!user) {
-        res.send(undefined);
+        res.send({ notFound: true });
         return;
       }
       const { firstName, lastName, _id } = user;

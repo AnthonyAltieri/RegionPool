@@ -30,6 +30,8 @@ class Main extends Component {
 
   render() {
     const { goToDashDestination, curLat, curLong,
+      setCurrentLocationInterval,
+      currentLocationInterval
     } = this.props;
 
     return (
@@ -37,6 +39,8 @@ class Main extends Component {
         <MainMap
           lat={curLat}
           lng={curLong}
+          setCurrentLocationInterval={setCurrentLocationInterval}
+          currentLocationInterval={currentLocationInterval}
         />
         <div
           className="box-info"
@@ -66,6 +70,7 @@ class Main extends Component {
 const stateToProps = (state) => ({
   curLat: state.User.lat,
   curLong: state.User.long,
+  currentLocationInterval: state.User.currentLocationInterval,
 });
 
 const dispatchToProps = (dispatch) => ({
@@ -77,6 +82,9 @@ const dispatchToProps = (dispatch) => ({
   },
   retrievedCurrentLocation: (lat, long) => {
     dispatch(UserActions.retrievedCurrentLocation(lat, long));
+  },
+  setCurrentLocationInterval: (interval) => {
+    dispatch(UserActions.setCurrentLocationInterval(interval));
   }
 });
 

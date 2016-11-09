@@ -22,3 +22,8 @@ export const retrievedCurrentLocation = (lat, long) => ({
   lat,
   long,
 });
+
+export const setCurrentLocationInterval = (interval) => ({
+  type: 'SET_CURRENT_LOCATION_INTERVAL',
+  interval,
+})

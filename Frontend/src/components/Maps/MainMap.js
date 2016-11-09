@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import { handleLocationWithPolygons } from '../../Util/Maps';
 
 
 const regions = [
@@ -53,32 +54,57 @@ const regions = [
       { lat: 32.872270, lng: -117.227098 },
       { lat: 32.871555, lng: -117.237863 },
     ],
-    strokeColor: '#4CAF50',
+    strokeColor: '#FF0000',
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: '#4CAF50',
+    fillColor: '#FF0000',
     fillOpacity: 0.35
   }
-]
+];
+
+const handleCurrentLocation = (map, marker, polygons) => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
+    // map.panTo(new google.maps.LatLng(lat || 32.867740, lng || -117.233501));
+    handleLocationWithPolygons(polygons, lat, lng);
+  });
+};
+
+const ONE_SECOND = 1000;
 
 class MainMap extends Component {
   componentDidMount() {
-    const { lat, lng } = this.props;
+    const { lat, lng, setCurrentLocationInterval } = this.props;
     var map;
+    var currentLocMarker;
     function initMap() {
       map = new google.maps.Map(document.getElementById('mainMap'), {
-        center: { lat, lng },
+        center: new google.maps.LatLng(lat || 32.871810, lng || -117.234912),
         zoom: 14,
       });
-      new google.maps.Marker({
-        position: { lat: 32.867740, lng: -117.233501 },
+      currentLocMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat || 32.867740, lng || -117.233501),
         map: map
       });
+      let polygons = [];
       regions.forEach((r) => {
-        new google.maps.Polygon(r).setMap(map);
-      })
+        const polygon = new google.maps.Polygon(r);
+        polygons = [...polygons, polygon];
+        polygon.setMap(map);
+      });
+      setCurrentLocationInterval(
+        window.setInterval(() => {
+          handleCurrentLocation(map, currentLocMarker, polygons)
+        }, ONE_SECOND
+      ));
     }
     initMap();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.props.currentLocationInterval);
   }
 
   render() {

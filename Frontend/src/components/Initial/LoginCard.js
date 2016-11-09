@@ -10,7 +10,9 @@ import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { toastr } from 'react-redux-toastr';
+import { logIn } from '../../api/User';
 import * as LoginActions from '../../actions/Login'
+import * as UserActions from '../../actions/User';
 
 
 const validEmail = (email) => {
@@ -34,7 +36,7 @@ const hasValidCredentials = (email = '', password = '', endLoading) => {
 
 let LoginCard = ({
   goToSignup,
-  tryLogin,
+  logInSuccess,
   isDialogOpen,
   showDialog,
   hideDialog,
@@ -103,10 +105,23 @@ let LoginCard = ({
         <RaisedButton
           label={'Log in'}
           onClick={() => {
-            tryLogin(
-              email,
-              password
-            );
+            console.log('on click')
+            logIn(email, password)
+              .then((payload) => {
+                const { notFound, id, firstName, lastName } = payload;
+                if (!!notFound) {
+                  toastr.info('No user found with those credentials');
+                  return;
+                }
+                logInSuccess(
+                  id,
+                  firstName,
+                  lastName
+                );
+              })
+              .catch((error) => {
+                toastr.error('Server Error please try again');
+              });
           }}
           fullWidth
           secondary
@@ -139,9 +154,10 @@ const dispatchToProps = (dispatch) => ({
   goToSignup: () => {
     dispatch(push('/signup'));
   },
-  tryLogin: (email, password) => {
+  logInSuccess: (id, firstName, lastName) => {
     // if (hasValidCredentials(email, password)) {
     // }
+    dispatch(UserActions.loggedIn(id, firstName, lastName));
     dispatch(push('/dash/main'));
   },
   showDialog: () => {
