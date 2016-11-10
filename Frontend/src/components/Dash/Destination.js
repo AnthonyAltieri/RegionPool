@@ -18,7 +18,7 @@ import { push } from 'react-router-redux';
 import { getCrossStreets } from '../../api/Destination';
 
 const cities = [
-  'San Diego', 'Pacific Beach'
+  'San Diego', 'Pacific Beach', 'La Jolla'
 ];
 const crossStreets = {
   'san diego': [
@@ -59,7 +59,7 @@ class Destination extends Component {
     const { step, activateStep,
       enteredCrossStreet, removedCrossStreet, enteredCity,
       goToDashWaiting, savedCity, savedCrossStreet,
-      crossStreetsData,
+      crossStreetsData, currentZone,
     } = this.props;
     console.log('step', step);
 
@@ -115,7 +115,7 @@ class Destination extends Component {
                     maxWidth: "600px",
                   }}
                   filter={AutoComplete.caseInsensitiveFilter}
-                  dataSource={cities}
+                  dataSource={cities.filter(c => c.toLowerCase() !== currentZone )}
                   ref={(n) => {
                     city = n;
                   }}
@@ -254,10 +254,9 @@ const stateToProps = (state) => ({
   savedCity: state.Destination.city,
   savedCrossStreet: state.Destination.crossStreet,
   crossStreetsData: !!state.Destination.city
-    ? state
-      .Destination
-      .crossStreetsData[state.Destination.city.toLowerCase()] || []
+    ? crossStreets[state.Destination.city.toLowerCase()] || []
     : [],
+  currentZone: state.User.zone || '',
 });
 
 const dispatchToProps = (dispatch) => ({

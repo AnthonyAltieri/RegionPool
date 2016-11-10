@@ -9,6 +9,7 @@ import { clearDestination } from '../../actions/Destination';
 import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 import { toastr } from 'react-redux-toastr';
+import * as UserActions from '../../actions/User'
 import WaitingMap from '../Maps/WaitingMap';
 
 const cSToCoords = {
@@ -120,7 +121,11 @@ const dispatchToProps = (dispatch) => ({
   },
   goToDashBoarding: () => {
     dispatch(push('/dash/boarding'));
-  }
+  },
+  setLocationStatus: (isInPickupZone) => {
+    dispatch(UserActions.setLocationStatus(isInPickupZone));
+  },
+
 });
 
 Waiting = connect(

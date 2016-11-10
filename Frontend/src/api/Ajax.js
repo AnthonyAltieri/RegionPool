@@ -5,75 +5,102 @@
 const SERVER_PREFIX = 'http://35.161.34.206';
 const LOCAL_PREFIX = 'http://localhost:4040';
 
-export const post = (url, params = {}) => {
+export const send = (type, url, params = {}, withCredentials = true) => {
   return new Promise((resolve, reject) => {
-    send('POST', url, params, true)
-      .then((payload) => { resolve(payload) })
-      .catch((error) => { reject(error) });
-  })
-};
-
-export const send = (type, url, params = {}, withCredentials = false)  => {
-  console.log('send()')
-  return new Promise((resolve, reject) => {
-    const ajax = new XMLHttpRequest();
-    ajax.open(type, LOCAL_PREFIX + url, true);
-    ajax.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    ajax.withCredentials = withCredentials;
-    ajax.onreadystatechange = () => {
-      if (ajax.readyState !== XMLHttpRequest.DONE) return;
-      const isFivehundred = (code) => code >= 500 && code <= 599;
-      const isZero = (code) => code === 0;
-      if (isFivehundred(ajax.status)) {
-        reject({
-          code: 500,
-          error: {
-            code: 500,
-            info: 'Server Error',
-          }
-        });
-      }
-      else if (isZero(ajax.status)) {
-        reject({
-          code: 0,
-          error: {
-            code: 0,
-            info: 'No Connection Error',
-          }
-        });
-      }
-
-      else {
+    const xmlhttp = new XMLHttpRequest();
+    if (type !== 'POST' && type !== 'GET') {
+      throw new Error(`Invalid xmlhttp type ${type}`);
+    }
+    xmlhttp.open(type, LOCAL_PREFIX + url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.withCredentials = withCredentials;
+    xmlhttp.onreadystatechange = () => {
+      if (xmlhttp.readyState !== 4) return;
+      if (xmlhttp.status === 200) {
         try {
-          const payload = JSON.stringify(ajax.response);
-          resolve({
-            code: ajax.status,
-            payload,
-          })
-        } catch (error) {
-
+          const payload = JSON.parse(xmlhttp.responseText);
+          resolve(payload);
+        } catch (e) {
           reject({
-            code: undefined,
-            error,
+            text: 'response parse error'
           })
         }
+      } else {
+        reject({
+          code: xmlhttp.status,
+          text: xmlhttp.statusText,
+        })
       }
-    };
-    let parameters;
+    }
     try {
-      if (!!params) {
-        parameters = JSON.stringify(params)
-      }
+      const parameters = JSON.stringify(params);
+      console.log('parameters', parameters);
+      xmlhttp.send(parameters);
     } catch (e) {
       reject({
-        error: {
-          code: null,
-          info: 'Stringify Failed: ' + e
-        }
-      });
+        text: 'params stringify error',
+      })
     }
-    ajax.send(parameters);
-    return;
+  });
+};
+
+export const post = (url, params = {}, withCredentials = true) => {
+  console.log('post()');
+  return new Promise((resolve, reject) => {
+    send('POST', url, params, withCredentials)
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
   })
 };
+
+// export const sendOld = (type, url, params = {}, withCredentials = false)  => {
+//   console.log('send()');
+//   return new Promise((resolve, reject) => {
+//     const ajax = new XMLHttpRequest();
+//     ajax.open(type, LOCAL_PREFIX + url, true);
+//     ajax.setRequestHeader('Content-Type', 'application/json');
+//     ajax.withCredentials = withCredentials;
+//     ajax.onreadystatechange = () => {
+//       if (ajax.readyState !== XMLHttpRequest.DONE) return;
+//       const isFivehundred = (code) => code >= 500 && code <= 599;
+//       const isZero = (code) => code === 0;
+//       if (isFivehundred(ajax.status)) {
+//         reject({
+//           code: 500,
+//           error: {
+//             code: 500,
+//             info: 'Server Error',
+//           }
+//         });
+//       }
+//       else if (isZero(ajax.status)) {
+//         reject({
+//           code: 0,
+//           error: {
+//             code: 0,
+//             info: 'No Connection Error',
+//           }
+//         });
+//       }
+//
+//       else {
+//         try {
+//           const response = ajax.response;
+//           resolve({
+//             code: ajax.status,
+//             response,
+//           })
+//         } catch (error) {
+//
+//           reject({
+//             code: undefined,
+//             error,
+//           })
+//         }
+//       }
+//     };
+//     ajax.send(params);
+//     return;
+//   })
+// };
 

@@ -93,12 +93,16 @@ let LoginCard = ({
         </div>
         <TextField
           floatingLabelText="Email"
-          value={email}
+          onChange={(event) => {
+            email = event.target.value;
+          }}
         />
         <TextField
           floatingLabelText="Password"
           type="password"
-          value={password}
+          onChange={(event) => {
+            password = event.target.value;
+          }}
         />
         <br />
         <br />
@@ -106,22 +110,27 @@ let LoginCard = ({
           label={'Log in'}
           onClick={() => {
             console.log('on click')
-            logIn(email, password)
-              .then((payload) => {
-                const { notFound, id, firstName, lastName } = payload;
-                if (!!notFound) {
-                  toastr.info('No user found with those credentials');
-                  return;
-                }
-                logInSuccess(
-                  id,
-                  firstName,
-                  lastName
-                );
-              })
-              .catch((error) => {
-                toastr.error('Server Error please try again');
-              });
+            if (hasValidCredentials(email, password)) {
+              logIn(email, password)
+                .then((payload) => {
+                  const { notFound, id, firstName, lastName } = payload;
+                  console.log('payload', payload);
+                  if (!!notFound) {
+                    toastr.info('No user found with those credentials');
+                    return;
+                  }
+                  logInSuccess(
+                    id,
+                    firstName,
+                    lastName
+                  );
+                })
+                .catch((error) => {
+                  console.log('error', error);
+                  toastr.error('Server Error please try again');
+                });
+
+            }
           }}
           fullWidth
           secondary

@@ -9,18 +9,23 @@ export const isWithinPolygon = (polygon, lat, lng) => (
   )
 );
 
-export const handleLocationWithPolygons = (polygons, lat, lng) => {
-  polygons.forEach((p) => {
-    if (isWithinPolygon(p, lat, lng)) {
+export const handleLocationWithPolygons = (polyObj, lat, lng) => {
+  let isInPickupZone = false;
+  const keys = Object.keys(polyObj);
+  keys.forEach((k) => {
+    if (isWithinPolygon(polyObj[k], lat, lng)) {
+      isInPickupZone = true;
       p.setOptions({
         strokeColor: '#4CAF50',
         fillColor: '#4CAF50',
       })
+      return polyObj[k].name
     } else {
-      p.setOptions({
+      polyObj[k].setOptions({
         strokeColor: '#FF0000',
         fillColor: '#FF0000',
       });
     }
   })
+  return null;
 }

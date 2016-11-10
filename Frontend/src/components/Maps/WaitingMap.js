@@ -4,10 +4,17 @@
 
 import React, { Component } from 'react';
 
+const handleCurrentLocation = (map, marker) => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
+  });
+};
 
 class WaitingMap extends Component {
   componentDidMount() {
-    // const { current, car } = this.props;
+    const { setLocationStatus } = this.props;
     var map;
     function initMap() {
       map = new google.maps.Map(document.getElementById('waitingMap'), {
@@ -20,16 +27,35 @@ class WaitingMap extends Component {
 
 
       // Your location
-      new google.maps.Marker({
-        position: { lat: 32.867740, lng: -117.233501 },
-        map,
-      });
+      let marker;
+
       // Car marker
       new google.maps.Marker({
         position: { lat: 32.865047, lng: -117.234216 },
         icon: carIconDevelopment,
         map,
       });
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        marker = new google.maps.Marker({
+          position: (new google.maps.LatLng(lat || 32.871810, lng || -117.234912)),
+          map,
+        });
+        map.panTo(new google.maps.LatLng(lat, lng));
+      });
+
+      setCurrentLocationInterval(
+        window.setInterval(() => {
+            handleCurrentLocation(
+              map,
+              marker,
+              polygons,
+              setLocationStatus
+            )
+          }, LONG_TIME
+        ));
     }
     initMap();
   }

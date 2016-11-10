@@ -22,10 +22,24 @@ const User = (state = {}, action) => {
       }
     }
 
+    case 'SET_CURRENT_ZONE': {
+      return {
+        ...state,
+        zone: action.zone,
+      }
+    }
+
     case 'SET_CURRENT_LOCATION_INTERVAL': {
       return {
         ...state,
         interval: action.interval,
+      }
+    }
+
+    case 'SET_LOCATION_STATUS': {
+      return {
+        ...state,
+        isInPickupZone: action.isInPickupZone,
       }
     }
 

@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { toastr } from 'react-redux-toastr';
 import FontIcon from 'material-ui/FontIcon';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import * as UserActions from '../../actions/User';
@@ -12,7 +13,16 @@ import MainMap from '../Maps/MainMap';
 
 class Main extends Component {
   componentDidMount() {
-    const { retrievedCurrentLocation } = this.props;
+    const {
+      retrievedCurrentLocation,
+      userId,
+      goToLogin
+    } = this.props;
+    if (typeof userId === 'undefined') {
+      toastr.info('You must log in to use our service');
+      goToLogin();
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         retrievedCurrentLocation(
@@ -31,7 +41,10 @@ class Main extends Component {
   render() {
     const { goToDashDestination, curLat, curLong,
       setCurrentLocationInterval,
-      currentLocationInterval
+      currentLocationInterval,
+      isInPickupZone,
+      setLocationStatus,
+      setCurrentZone
     } = this.props;
 
     return (
@@ -41,27 +54,35 @@ class Main extends Component {
           lng={curLong}
           setCurrentLocationInterval={setCurrentLocationInterval}
           currentLocationInterval={currentLocationInterval}
+          setLocationStatus={setLocationStatus}
+          setCurrentZone={setCurrentZone}
         />
         <div
           className="box-info"
           style={{
-            backgroundColor: "#76FF03",
+            backgroundColor: !!isInPickupZone ? "#76FF03" : '#eeeeee',
           }}
         >
-          <p>You are inside a pick up region</p>
+          {!!isInPickupZone
+            ? <p>You are inside a pick up region</p>
+            : <p>You are outside of a pick up region, get to one to choose destination</p>
+          }
         </div>
-        <FloatingActionButton
-          style={{
-            position: "absolute",
-            bottom: "64px",
-            right: "42px",
-          }}
-          onClick={() => {
-            goToDashDestination();
-          }}
-        >
-          <FontIcon className="material-icons">directions_bus</FontIcon>
-        </FloatingActionButton>
+        {isInPickupZone
+          ? <FloatingActionButton
+            style={{
+              position: "absolute",
+              bottom: "64px",
+              right: "42px",
+            }}
+            onClick={() => {
+              goToDashDestination();
+            }}
+          >
+            <FontIcon className="material-icons">directions_bus</FontIcon>
+          </FloatingActionButton>
+          : null
+        }
       </div>
     );
   }
@@ -71,6 +92,8 @@ const stateToProps = (state) => ({
   curLat: state.User.lat,
   curLong: state.User.long,
   currentLocationInterval: state.User.currentLocationInterval,
+  isInPickupZone: state.User.isInPickupZone,
+  userId: state.User.id,
 });
 
 const dispatchToProps = (dispatch) => ({
@@ -85,6 +108,15 @@ const dispatchToProps = (dispatch) => ({
   },
   setCurrentLocationInterval: (interval) => {
     dispatch(UserActions.setCurrentLocationInterval(interval));
+  },
+  setLocationStatus: (isInPickupZone) => {
+    dispatch(UserActions.setLocationStatus(isInPickupZone));
+  },
+  setCurrentZone: (zone) => {
+    dispatch(UserActions.setCurrentZone(zone));
+  },
+  goToLogin: () => {
+    dispatch(push('/login'))
   }
 });
 

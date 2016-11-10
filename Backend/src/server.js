@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import session from 'express-session';
 import fs from 'fs';
+import { v1 } from 'node-uuid';
 import mongoose from 'mongoose';
 const MongoStore = require('connect-mongo/es5')(session);
 const app = express();
@@ -18,6 +19,14 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Database connection is open.');
 });
+
+const store =
+
+app.use(session({
+  genid: req => v1(),
+  secret: 'ALTIERI',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+}));
 
 app.use((req, res, next) => {
   res.error = (error) => {
@@ -35,7 +44,7 @@ app.use((req, res, next) => {
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, *');
   next();

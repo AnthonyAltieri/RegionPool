@@ -2,13 +2,12 @@
  * @author Anthony Altieri on 11/1/16.
  */
 
-import db from '../db';
 import UserSchema from '../schemas/User'
 import { Router } from 'express';
 import mongoose from 'mongoose';
 import md5 from '../../node_modules/blueimp-md5/js/md5';
-import fs from 'fs';
 const SALT = 'Altieri';
+import db from '../db'
 
 const User = mongoose.model('users', UserSchema);
 
@@ -66,17 +65,18 @@ function signUp(req, res) {
 function logIn(req, res) {
   const { email, password } = req.body;
 
+  console.log('email', email);
+  console.log('password', password);
+
   if (!email || !password) {
-    res.error({
-      msg: 'Missing required information',
-    });
+    res.send({ notFound: true });
     return;
   }
 
   db.findOne({
     password: encryptPassword(email, password),
     email,
-  })
+  }, User)
     .then((user) => {
       if (!user) {
         res.send({ notFound: true });
@@ -87,13 +87,16 @@ function logIn(req, res) {
       req.session.firstName = firstName;
       req.session.lastName = lastName;
       req.session.userId = _id;
-      res.success({
+      res.send({
         id: _id,
         firstName,
         lastName,
       });
     })
-    .catch((error) => { res.error(error) })
+    .catch((error) => {
+      console.log('logIn error', error.toString())
+      res.error(error)
+    })
 }
 
 function logOut(req, res) {

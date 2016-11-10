@@ -9,3 +9,8 @@ export const startTimer = () => ({
 export const decrementTimer = () => ({
   type: 'DECREMENT_TIMER',
 });
+
+export const setTimerInterval = (interval) => ({
+  type: 'SET_TIMER_INTERVAL',
+  interval,
+});

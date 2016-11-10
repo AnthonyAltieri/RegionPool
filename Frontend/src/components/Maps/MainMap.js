@@ -8,6 +8,7 @@ import { handleLocationWithPolygons } from '../../Util/Maps';
 
 const regions = [
   {
+    name: 'pacific beach',
     // PB zone
     paths: [
       { lat: 32.806285, lng: -117.242873 },
@@ -23,6 +24,7 @@ const regions = [
     fillOpacity: 0.35
   },
   {
+    name: 'san diego',
     // Downtown zone
     paths: [
       { lat: 32.719968, lng: -117.169282 },
@@ -38,6 +40,7 @@ const regions = [
     fillOpacity: 0.35
   },
   {
+    name: 'la jolla',
     // La Jolla Zone
     paths: [
       { lat: 32.871555, lng: -117.237863 },
@@ -62,21 +65,36 @@ const regions = [
   }
 ];
 
-const handleCurrentLocation = (map, marker, polygons) => {
+const handleCurrentLocation = (map, marker, polyObj, setLocationStatus, setCurrentZone) => {
+  const IS_IN_PICKUP_ZONE = true;
+  const NOT_IN_PICKUP_ZONE = false;
   navigator.geolocation.getCurrentPosition((position) => {
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
     marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
     // map.panTo(new google.maps.LatLng(lat || 32.867740, lng || -117.233501));
-    handleLocationWithPolygons(polygons, lat, lng);
+    const zoneName = handleLocationWithPolygons(polyObj, lat, lng);
+    if (!!zoneName) {
+      setLocationStatus(IS_IN_PICKUP_ZONE);
+      setCurrentZone(zoneName);
+    } else {
+      setLocationStatus(NOT_IN_PICKUP_ZONE)
+    }
   });
 };
 
 const ONE_SECOND = 1000;
+const LONG_TIME = 50000;
 
 class MainMap extends Component {
   componentDidMount() {
-    const { lat, lng, setCurrentLocationInterval } = this.props;
+    const {
+      lat,
+      lng,
+      setCurrentLocationInterval,
+      setLocationStatus,
+      setCurrentZone
+    } = this.props;
     var map;
     var currentLocMarker;
     function initMap() {
@@ -88,15 +106,23 @@ class MainMap extends Component {
         position: new google.maps.LatLng(lat || 32.867740, lng || -117.233501),
         map: map
       });
+      let polyObj = {};
       let polygons = [];
       regions.forEach((r) => {
         const polygon = new google.maps.Polygon(r);
+        polyObj[r.name] = polygon;
         polygons = [...polygons, polygon];
         polygon.setMap(map);
       });
       setCurrentLocationInterval(
         window.setInterval(() => {
-          handleCurrentLocation(map, currentLocMarker, polygons)
+          handleCurrentLocation(
+            map,
+            currentLocMarker,
+            polyObj,
+            setLocationStatus,
+            setCurrentZone
+          )
         }, ONE_SECOND
       ));
     }

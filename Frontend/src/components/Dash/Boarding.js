@@ -13,21 +13,35 @@ import * as BoardingActions from '../../actions/Boarding';
 
 class Boarding extends Component {
   componentDidMount() {
-    const { startTimer, decrementTimer, } = this.props;
+    const {
+      startTimer,
+      decrementTimer,
+      setTimerInterval,
+    } = this.props;
     startTimer();
 
     const ONE_SECOND = 1000;
-    this.timerInterval = window.setInterval(() => {
-      decrementTimer();
-    }, ONE_SECOND);
-
+    setTimerInverval(
+      window.setInterval(
+        () => { decrementTimer() },
+        ONE_SECOND
+      )
+  )
   }
+
+  componentWillUnmount() {
+    const { timerInterval } = this.props;
+    clearInterval(timerInterval);
+  }
+
   render() {
-    const { goToDashDestination, timer, goToDashInRide
+    const {
+      goToDashDestination,
+      timer,
+      goToDashInRide,
     } = this.props;
 
     if (timer === 45) {
-      clearInterval(this.timerInterval)
       goToDashInRide();
     }
 
@@ -84,6 +98,7 @@ class Boarding extends Component {
 }
 const stateToProps = (state) => ({
   timer: state.Boarding.timer || 60,
+  timerInterval: state.Boarding.timerInterval,
 });
 const dispatchToProps = (dispatch) => ({
   goToDashDestination: () => {
@@ -98,6 +113,9 @@ const dispatchToProps = (dispatch) => ({
   },
   goToDashInRide: () => {
     dispatch(push('/dash/inRide'));
+  },
+  setTimerInterval: (interval) => {
+    dispatch(BoardingActions.setTimerInterval(interval))
   }
 });
 

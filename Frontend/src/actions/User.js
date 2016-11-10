@@ -17,10 +17,20 @@ export const signedUp = (id, firstName, lastName) => ({
   lastName,
 });
 
+export const setCurrentZone = (zone) => ({
+  type: 'SET_CURRENT_ZONE',
+  zone,
+});
+
 export const retrievedCurrentLocation = (lat, long) => ({
   type: 'RETRIEVED_CURRENT_LOCATION',
   lat,
   long,
+});
+
+export const setLocationStatus = (isInPickupZone) => ({
+  type: 'SET_LOCATION_STATUS',
+  isInPickupZone,
 });
 
 export const setCurrentLocationInterval = (interval) => ({

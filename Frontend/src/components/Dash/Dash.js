@@ -9,7 +9,9 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import { connect } from 'react-redux';
+import { logOut } from '../../api/User';
 import { push } from 'react-router-redux';
+import { toastr } from 'react-redux-toastr';
 import * as DrawerActions from '../../actions/Drawer'
 import Avatar from 'material-ui/Avatar';
 
@@ -22,7 +24,7 @@ class Dash extends Component {
 
   render() {
     const { isDrawerOpen, openDrawer, closeDrawer,
-      logOut, children, name } = this.props;
+      logOutSuccess, children, name } = this.props;
 
     return (
       <div>
@@ -74,7 +76,16 @@ class Dash extends Component {
               </FontIcon>
             }
             onClick={() => {
-              logOut();
+              logOut()
+                .then((result) => {
+                  const { error } = result;
+                  if (error) {
+                    toastr.error('Something went wrong, please try again');
+                    return;
+                  }
+                  toastr.success('Log Out success');
+                  logOutSuccess();
+                })
             }}
           >
             Log Out
@@ -125,7 +136,7 @@ const dispatchToProps = (dispatch) => ({
   closeDrawer: () => {
     dispatch(DrawerActions.closeDrawer());
   },
-  logOut: () => {
+  logOutSuccess: () => {
     dispatch(push('/login'));
   }
 });

@@ -8,10 +8,7 @@ export const logIn = (email, password)  => {
     return new Promise((resolve, reject) => {
         post('/api/user/logIn', { email, password })
           .then((payload) => {
-            if (!payload || payload.error) {
-              resolve(null);
-              return;
-            }
+            console.log('payload === ', payload);
             resolve(payload);
           })
           .catch((error) => { reject(error) });
@@ -41,3 +38,11 @@ export const signUp = (email, password, firstName, lastName) => {
       .catch((error) => { reject(error) });
   })
 };
+
+export const logOut = () => {
+  return new Promise((resolve, reject) => {
+    post('/api/user/logOut', {})
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
+  })
+}

@@ -13,8 +13,6 @@ const db = {
   find
 };
 
-export default db;
-
 function findById(id, model) {
   return new Promise( (resolve, reject) => {
     model.findById(id, (err, found) => {
@@ -113,5 +111,7 @@ function findAll(model) {
 function generate(attributes, model) {
   return new model(attributes)
 }
+
+export default db;
 
 
