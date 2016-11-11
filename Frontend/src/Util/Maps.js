@@ -18,7 +18,7 @@ export const handleLocationWithPolygons = (polyObj, lat, lng) => {
       p.setOptions({
         strokeColor: '#4CAF50',
         fillColor: '#4CAF50',
-      })
+      });
       return polyObj[k].name
     } else {
       polyObj[k].setOptions({

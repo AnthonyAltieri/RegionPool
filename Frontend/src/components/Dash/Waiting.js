@@ -41,7 +41,11 @@ class Waiting extends Component {
   render() {
 
 
-    const { goToDashDestination, goToDashBoarding } = this.props;
+    const {
+      goToDashDestination,
+      goToDashBoarding,
+      setCurrentLocationInterval
+    } = this.props;
 
     setTimeout(() => {
       goToDashBoarding();
@@ -85,7 +89,9 @@ class Waiting extends Component {
               mediaStyle={{
               }}
             >
-              <WaitingMap />
+              <WaitingMap
+                setCurrentLocationInterval={setCurrentLocationInterval}
+              />
             </CardMedia>
             <CardActions>
               <FlatButton
@@ -122,8 +128,8 @@ const dispatchToProps = (dispatch) => ({
   goToDashBoarding: () => {
     dispatch(push('/dash/boarding'));
   },
-  setLocationStatus: (isInPickupZone) => {
-    dispatch(UserActions.setLocationStatus(isInPickupZone));
+  setCurrentLocationInterval: (interval) => {
+    dispatch(UserActions.setCurrentLocationInterval(interval));
   },
 
 });

@@ -2,6 +2,7 @@
  * @author Anthony Altieri on 11/1/16.
  */
 
+
 import { post } from './Ajax';
 
 export const logIn = (email, password)  => {
@@ -45,4 +46,20 @@ export const logOut = () => {
       .then((payload) => { resolve(payload) })
       .catch((error) => { reject(error) })
   })
-}
+};
+
+export const resetPassword = (passwordResetCode, newPassword) => {
+  return new Promise((resolve, reject) => {
+    post('/api/user/resetPassword', { passwordResetCode, newPassword })
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
+  })
+};
+
+export const forgotPassword = (recipientEmail) => {
+  return new Promise((resolve, reject) => {
+    post('/api/user/forgotPassword', { recipientEmail })
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
+  });
+};

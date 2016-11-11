@@ -73,6 +73,7 @@ function save(instance) {
   return new Promise( (resolve, reject) => {
     instance.save(error => {
       if (error) {
+        console.log('in db, error', error);
         reject(error);
         return
       }

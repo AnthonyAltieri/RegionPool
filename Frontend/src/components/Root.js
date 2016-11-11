@@ -15,6 +15,7 @@ import Waiting from './Dash/Waiting';
 import Boarding from './Dash/Boarding';
 import Finish from './Dash/Finish';
 import InRide from './Dash/InRide';
+import ForgotPassword from './Initial/Forgotpassword';
 
 class Root extends Component {
   render() {
@@ -26,6 +27,7 @@ class Root extends Component {
             <IndexRedirect to="/login" />
             <Route path="login" component={Initial} />
             <Route path="signup" component={Initial} />
+            <Route path="forgotPassword/:code" component={ForgotPassword} />
             <Route path="dash" component={Dash}>
               <IndexRedirect to="/dash/main" />
               <Route path="main" component={Main} />

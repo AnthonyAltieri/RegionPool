@@ -11,6 +11,7 @@ const User = new Schema({
   email: String,
   loggedIn: Boolean,
   phoneNumber: String,
+  passwordResetCode: String,
   picture: {
     data: Buffer,
     contentType: String,

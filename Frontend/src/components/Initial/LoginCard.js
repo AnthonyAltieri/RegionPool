@@ -13,6 +13,7 @@ import { toastr } from 'react-redux-toastr';
 import { logIn } from '../../api/User';
 import * as LoginActions from '../../actions/Login'
 import * as UserActions from '../../actions/User';
+import { forgotPassword } from '../../api/User';
 
 
 const validEmail = (email) => {
@@ -43,6 +44,7 @@ let LoginCard = ({
 }) => {
   let email;
   let password;
+  let recipientEmail;
   return (
     <div
       className="login-card"
@@ -52,6 +54,9 @@ let LoginCard = ({
     >
       <Dialog
         title="Password recovery"
+        contentStyle={{
+          width: "90%"
+        }}
         open={isDialogOpen}
         actions={[
           <FlatButton
@@ -66,8 +71,24 @@ let LoginCard = ({
             primary
             keyboardFocused
             onClick={() => {
-              toastr.success('Password recovery email sent.')
-              hideDialog();
+              if (!validEmail(recipientEmail)) {
+                toastr.info('Invalid email');
+                return;
+              }
+              forgotPassword(recipientEmail)
+                .then((payload) => {
+                  const { invalidRecipient, error, success } = payload;
+                  if (invalidRecipient) {
+                    toastr.info('No user found with that email');
+                    return;
+                  }
+                  if (error) {
+                    toastr.error('Something went wrong please try again');
+                  }
+                  toastr.success('Recovery email sent');
+                  hideDialog();
+                })
+                .catch((error) => { toastr.error('Something went wrong please try again') })
             }}
           />
         ]}
@@ -78,6 +99,9 @@ let LoginCard = ({
           </p>
           <TextField
             floatingLabelText="Email"
+            onChange={(event) => {
+              recipientEmail = event.target.value;
+            }}
           />
         </div>
       </Dialog>

@@ -16,12 +16,12 @@ class Boarding extends Component {
     const {
       startTimer,
       decrementTimer,
-      setTimerInterval,
+      setTimerInterval
     } = this.props;
     startTimer();
 
     const ONE_SECOND = 1000;
-    setTimerInverval(
+    setTimerInterval(
       window.setInterval(
         () => { decrementTimer() },
         ONE_SECOND

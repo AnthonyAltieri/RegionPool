@@ -5,6 +5,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import database from './db';
 import session from 'express-session';
 import fs from 'fs';
 import { v1 } from 'node-uuid';
@@ -12,6 +13,8 @@ import mongoose from 'mongoose';
 const MongoStore = require('connect-mongo/es5')(session);
 const app = express();
 const PORT = 4040;
+
+
 
 mongoose.connect('mongodb://localhost/RegionPool');
 var db = mongoose.connection;

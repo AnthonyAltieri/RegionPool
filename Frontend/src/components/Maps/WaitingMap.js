@@ -14,7 +14,10 @@ const handleCurrentLocation = (map, marker) => {
 
 class WaitingMap extends Component {
   componentDidMount() {
-    const { setLocationStatus } = this.props;
+    const {
+      setLocationStatus,
+      setCurrentLocationInterval,
+    } = this.props;
     var map;
     function initMap() {
       map = new google.maps.Map(document.getElementById('waitingMap'), {

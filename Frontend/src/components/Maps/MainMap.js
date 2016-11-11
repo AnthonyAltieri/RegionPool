@@ -114,8 +114,7 @@ class MainMap extends Component {
         polygons = [...polygons, polygon];
         polygon.setMap(map);
       });
-      setCurrentLocationInterval(
-        window.setInterval(() => {
+      const currentLocationInterval = window.setInterval(() => {
           handleCurrentLocation(
             map,
             currentLocMarker,
@@ -123,8 +122,8 @@ class MainMap extends Component {
             setLocationStatus,
             setCurrentZone
           )
-        }, ONE_SECOND
-      ));
+        }, ONE_SECOND);
+      setCurrentLocationInterval(currentLocationInterval);
     }
     initMap();
   }

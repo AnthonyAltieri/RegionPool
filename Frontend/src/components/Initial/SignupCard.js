@@ -125,7 +125,7 @@ let LoginCard = ({
             if (hasValidCredentials(email, password, firstName, lastName)) {
               signUp(email, password, firstName, lastName)
                 .then((payload) => {
-                  const { error, inUse, firstName, lastName } = payload;
+                  const { error, inUse, id, firstName, lastName } = payload;
                   if (!!error) {
                     toastr.error('Something went wrong please try again')
                     return;
@@ -134,7 +134,7 @@ let LoginCard = ({
                     toastr.info('That email is already in use');
                     return;
                   }
-                  signedUp(firstName, lastName);
+                  signedUp(id, firstName, lastName);
                   toastr.success('Signed up successfully');
                   goToDashMain();
                 })
@@ -158,8 +158,8 @@ const dispatchToProps = (dispatch) => ({
   goToLogin: () => {
     dispatch(push('/login'));
   },
-  signedUp: (firstName, lastName) => {
-    dispatch(UserActions.signedUp(firstName, lastName));
+  signedUp: (id, firstName, lastName) => {
+    dispatch(UserActions.signedUp(id, firstName, lastName));
   },
   goToDashMain: () => {
     dispatch(push('/dash/main'));
