@@ -7,6 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import AppWithToast from './AppWithToast';
+import Payment from './Dash/Payment';
 import Initial from './Initial/Initial';
 import Dash from './Dash/Dash';
 import Main from './Dash/Main';
@@ -36,6 +37,7 @@ class Root extends Component {
               <Route path="boarding" component={Boarding} />
               <Route path="finish" component={Finish} />
               <Route path="inRide" component={InRide} />
+              <Route path="payment" component={Payment} />
             </Route>
           </Route>
         </Router>

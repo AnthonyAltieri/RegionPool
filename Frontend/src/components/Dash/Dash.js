@@ -23,8 +23,16 @@ class Dash extends Component {
   }
 
   render() {
-    const { isDrawerOpen, openDrawer, closeDrawer,
-      logOutSuccess, children, name } = this.props;
+    const {
+      isDrawerOpen,
+      openDrawer,
+      closeDrawer,
+      logOutSuccess,
+      children,
+      name,
+      goToPayment,
+      goToMain
+    } = this.props;
 
     return (
       <div>
@@ -68,7 +76,33 @@ class Dash extends Component {
               {name}
             </h3>
           </div>
+          <MenuItem
+            leftIcon={
+              <FontIcon className="material-icons">
+                my_location
+              </FontIcon>
+            }
+            onClick={() => {
+              goToMain();
+              closeDrawer();
+            }}
+          >
+            Pickup
+          </MenuItem>
 
+          <MenuItem
+            leftIcon={
+              <FontIcon className="material-icons">
+                credit_card
+              </FontIcon>
+            }
+            onClick={() => {
+              goToPayment();
+              closeDrawer();
+            }}
+          >
+            Payment
+          </MenuItem>
           <MenuItem
             leftIcon={
               <FontIcon className="material-icons">
@@ -138,6 +172,12 @@ const dispatchToProps = (dispatch) => ({
   },
   logOutSuccess: () => {
     dispatch(push('/login'));
+  },
+  goToPayment: () => {
+    dispatch(push('/dash/payment'));
+  },
+  goToMain: () => {
+    dispatch(push('/dash/main'))
   }
 });
 

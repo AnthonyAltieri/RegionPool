@@ -17,6 +17,15 @@ export const signedUp = (id, firstName, lastName) => ({
   lastName,
 });
 
+export const setCreditCard = (number, csv, name) => ({
+  type: 'SET_CREDIT_CARD',
+  creditCard: {
+    name,
+    csv,
+    number
+  }
+});
+
 export const setCurrentZone = (zone) => ({
   type: 'SET_CURRENT_ZONE',
   zone,

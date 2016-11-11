@@ -18,6 +18,10 @@ $color-accent: #FF4081;
   background: $color-primary !important;
 }
 
+.background-bright {
+  background: $color-bright !important;
+}
+
 $font-default: Rubik, helvetica, sans-serif;
 
 * {
@@ -45,6 +49,11 @@ $font-default: Rubik, helvetica, sans-serif;
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.c.space-between {
+  justify-content: space-between;
+  @extend .c;
 }
 
 .c.center {
@@ -94,7 +103,7 @@ $font-default: Rubik, helvetica, sans-serif;
     height: 80%;
     max-height: 600px;
     width: 70%;
-    min-width: 300px;
+    min-width: 280px;
     max-width: 460px;
     margin: auto;
     padding: 12px;
@@ -220,4 +229,22 @@ $font-default: Rubik, helvetica, sans-serif;
     display: inline-block;
 
   }
+}
+
+.card-info {
+  .header {
+    text-align: center;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .label {
+    font-size: 0.8em;
+    color: #6b6b6b;
+  }
+  p {
+    margin: 0;
+    display: inline-block;
+  }
+
 }

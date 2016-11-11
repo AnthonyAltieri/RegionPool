@@ -3,6 +3,7 @@
  */
 
 import UserSchema from '../schemas/User'
+import CreditCardSchema from '../schemas/CreditCard'
 import { Router } from 'express';
 import mongoose from 'mongoose';
 import md5 from '../../node_modules/blueimp-md5/js/md5';
@@ -21,6 +22,8 @@ router.post('/logOut', logOut);
 router.post('/forgotPassword', forgotPassword);
 router.post('/resetPassword', resetPassword);
 router.post('/photo/upload', photoUpload);
+router.post('/saveCreditCard', saveCreditCard);
+router.post('/getCreditCard', getCreditCard);
 
 function signUp(req, res) {
   const { firstName, lastName, email, password }  = req.body;
@@ -207,6 +210,73 @@ function forgotPassword(req, res) {
         })
     })
 }
+
+function saveCreditCard(req, res) {
+  console.log('save credit card');
+  const { number, csv, name, userId } = req.body;
+  db.findById(userId, User)
+    .then((user) => {
+      if (!user) {
+        res.send({
+          error: true,
+        });
+        return;
+      }
+      user.creditCard = {
+        number,
+        csv,
+        name,
+      };
+      db.save(user)
+        .then((user) => {
+          res.send({
+            success: true,
+          })
+        })
+        .catch((error) => {
+          res.send({
+            error: true
+          })
+        })
+    })
+    .catch((error) => {
+      console.log('error', error);
+      res.send({
+        error: true
+      })
+    })
+}
+
+function getCreditCard(req, res) {
+  const { userId } = req.body;
+
+  db.findById(userId, User)
+    .then((user) => {
+      if (!user) {
+        res.send({
+          error: true,
+        });
+        return;
+      }
+      if (!user.creditCard) {
+        res.send({
+          noCreditCard: true,
+        });
+        return;
+      }
+      res.send({
+        number: user.creditCardNumber,
+        csv: user.creditCardCsv,
+        name: user.creditCardName,
+      });
+    })
+    .catch((error) => {
+      res.send({
+        error: true
+      })
+    })
+
+};
 
 // TODO: implement
 function photoUpload(req, res) {

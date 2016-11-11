@@ -3,6 +3,7 @@
  */
 
 import mongoose, { Schema } from 'mongoose';
+import CreditCard from './CreditCard';
 
 const User = new Schema({
   firstName: String,
@@ -12,6 +13,7 @@ const User = new Schema({
   loggedIn: Boolean,
   phoneNumber: String,
   passwordResetCode: String,
+  creditCard: CreditCard,
   picture: {
     data: Buffer,
     contentType: String,

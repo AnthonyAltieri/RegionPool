@@ -29,6 +29,13 @@ const User = (state = {}, action) => {
       }
     }
 
+    case 'SET_CREDIT_CARD': {
+      return {
+        ...state,
+        creditCard: action.creditCard
+      }
+    }
+
     case 'SET_CURRENT_LOCATION_INTERVAL': {
       return {
         ...state,

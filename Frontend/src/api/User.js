@@ -63,3 +63,19 @@ export const forgotPassword = (recipientEmail) => {
       .catch((error) => { reject(error) })
   });
 };
+
+export const getCreditCard = (userId) => {
+  return new Promise((resolve, reject) => {
+    post('/api/user/getCreditCard', { userId })
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
+  })
+};
+
+export const saveCreditCard = (number, csv, name, userId) => {
+  return new Promise((resolve, reject) => {
+    post('/api/user/saveCreditCard', { number, csv, name, userId })
+      .then((payload) => { resolve(payload) })
+      .catch((error) => { reject(error) })
+  })
+};
