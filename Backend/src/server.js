@@ -8,11 +8,27 @@ import path from 'path';
 import database from './db';
 import session from 'express-session';
 import fs from 'fs';
+import https from 'https';
 import { v1 } from 'node-uuid';
 import mongoose from 'mongoose';
 const MongoStore = require('connect-mongo/es5')(session);
 const app = express();
-const PORT = 4040;
+const ports = [80, 443];
+
+const server = https.createServer({
+	key: fs.readFileSync(path.join(__dirname, '../../../tls/key.pem')),
+	cert: fs.readFileSync(path.join(__dirname, '../../../tls/cert.pem'))
+	},
+	app
+);
+
+app.use('*', (req, res, next) => {
+	if (req.secure) {
+		next();
+		return;
+	}
+	res.redirect('https://regionpool.xyz' + req.url);
+});
 
 
 
@@ -47,7 +63,7 @@ app.use((req, res, next) => {
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://regionpool.xyz');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, *');
   next();
@@ -73,6 +89,8 @@ app.get('/*', (req, res) => {
 const UserRouter = require('./routers/User');
 app.use('/api/user', UserRouter);
 
-app.listen(PORT, function() {
-  console.log('listening on port ' + PORT);
+server.listen(ports[1]);
+
+app.listen(ports[0], function() {
+	console.log('server starting');
 });

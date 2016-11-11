@@ -2,7 +2,7 @@
  * @author Anthony Altieri on 11/1/16.
  */
 
-const SERVER_PREFIX = 'http://35.161.34.206';
+const SERVER_PREFIX = 'https://regionpool.xyz';
 const LOCAL_PREFIX = 'http://localhost:4040';
 
 export const send = (type, url, params = {}, withCredentials = true) => {
@@ -11,8 +11,7 @@ export const send = (type, url, params = {}, withCredentials = true) => {
     if (type !== 'POST' && type !== 'GET') {
       throw new Error(`Invalid xmlhttp type ${type}`);
     }
-    console.log(`sending ${type} at ${LOCAL_PREFIX + url}`);
-    xmlhttp.open(type, LOCAL_PREFIX + url, true);
+    xmlhttp.open(type, SERVER_PREFIX + url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xmlhttp.withCredentials = withCredentials;
     xmlhttp.onreadystatechange = () => {

@@ -35,7 +35,7 @@ class WaitingMap extends Component {
       // Car marker
       new google.maps.Marker({
         position: { lat: 32.865047, lng: -117.234216 },
-        icon: carIconDevelopment,
+        icon: carIconProduction,
         map,
       });
 
