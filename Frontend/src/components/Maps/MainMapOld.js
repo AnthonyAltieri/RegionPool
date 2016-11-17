@@ -69,15 +69,12 @@ const handleCurrentLocation = (map, marker, polyObj, setLocationStatus, setCurre
   const IS_IN_PICKUP_ZONE = true;
   const NOT_IN_PICKUP_ZONE = false;
   navigator.geolocation.getCurrentPosition((position) => {
-    //let lat = position.coords.latitude;
-    //let lng = position.coords.longitude;
-    let lat = 32.869623;
-    let lng = -117.235899;
-    //marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
-    marker.setPosition(new google.maps.LatLng(32.869623, -117.235899));
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
     // map.panTo(new google.maps.LatLng(lat || 32.867740, lng || -117.233501));
-    //const zoneName = handleLocationWithPolygons(polyObj, lat, lng);
-    if (true) {
+    const zoneName = handleLocationWithPolygons(polyObj, lat, lng);
+    if (!!zoneName) {
       setLocationStatus(IS_IN_PICKUP_ZONE);
       setCurrentZone(zoneName);
     } else {
@@ -106,8 +103,7 @@ class MainMap extends Component {
         zoom: 14,
       });
       currentLocMarker = new google.maps.Marker({
-        //position: new google.maps.LatLng(lat || 32.867740, lng || -117.233501),
-        position: new google.maps.LatLng(32.869623, -117.235899),
+        position: new google.maps.LatLng(lat || 32.867740, lng || -117.233501),
         map: map
       });
       let polyObj = {};
@@ -119,14 +115,14 @@ class MainMap extends Component {
         polygon.setMap(map);
       });
       const currentLocationInterval = window.setInterval(() => {
-          handleCurrentLocation(
-            map,
-            currentLocMarker,
-            polyObj,
-            setLocationStatus,
-            setCurrentZone
-          )
-        }, ONE_SECOND);
+        handleCurrentLocation(
+          map,
+          currentLocMarker,
+          polyObj,
+          setLocationStatus,
+          setCurrentZone
+        )
+      }, ONE_SECOND);
       setCurrentLocationInterval(currentLocationInterval);
     }
     initMap();

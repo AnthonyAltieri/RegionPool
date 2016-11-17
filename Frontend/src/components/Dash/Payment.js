@@ -56,7 +56,6 @@ class Payment extends Component {
 
   componentDidMount() {
     const { userId, setCreditCard } = this.props;
-    console.log('hihi')
     getCreditCard(userId)
       .then((creditCard) => {
         console.log('creditCard', creditCard)
@@ -97,6 +96,9 @@ class Payment extends Component {
             <div
               style={{
                 height: "100%",
+                display: "flex",
+                flexFlow: "column",
+                alignItems: "center",
               }}
             >
               <TextField

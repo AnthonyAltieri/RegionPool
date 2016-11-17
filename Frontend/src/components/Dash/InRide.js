@@ -22,13 +22,17 @@ let InRide = ({
   crossStreet,
   goToDashFinish,
 }) => {
-  const FIVE_SECONDS = 5000;
-  setTimeout(() => {
-    goToDashFinish()
-  }, FIVE_SECONDS);
+  // const FIVE_SECONDS = 5000;
+  // setTimeout(() => {
+  //   goToDashFinish()
+  // }, FIVE_SECONDS);
   return (
-    <div className="fullscreen with-bar">
-      <h1 style={text}>You are riding with </h1>
+    <div
+      className="fullscreen with-bar"
+    >
+      <h1 style={text}>
+        You are riding with
+      </h1>
       <h3 style={text}>John Smith </h3>
       <hr />
       <h1 style={text}>You are going to</h1>
@@ -50,6 +54,11 @@ let InRide = ({
         >Cross Street:</h3>
         <h3 style={text}>{crossStreet}</h3>
       </div>
+      <hr />
+      <h1 style={text}>
+        Riders to pick up
+      </h1>
+      <h3 style={text}>3</h3>
     </div>
   );
 };

@@ -3,7 +3,6 @@
  */
 
 const SERVER_PREFIX = 'https://regionpool.xyz';
-const LOCAL_PREFIX = 'http://localhost:4040';
 
 export const send = (type, url, params = {}, withCredentials = true) => {
   return new Promise((resolve, reject) => {
