@@ -2,7 +2,6 @@
  * @author Anthony Altieri on 11/1/16.
  */
 
-const SERVER_PREFIX = 'https://regi';
 const SERVER_PREFIX = 'https://regionpool.xyz';
 
 export const send = (type, url, params = {}, withCredentials = true) => {
