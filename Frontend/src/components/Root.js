@@ -11,6 +11,7 @@ import Payment from './Dash/Payment';
 import Initial from './Initial/Initial';
 import Dash from './Dash/Dash';
 import Main from './Dash/Main';
+import MainOld from './Dash/MainOld';
 import Destination from './Dash/Destination';
 import Waiting from './Dash/Waiting';
 import Boarding from './Dash/Boarding';
@@ -32,6 +33,7 @@ class Root extends Component {
             <Route path="dash" component={Dash}>
               <IndexRedirect to="/dash/main" />
               <Route path="main" component={Main} />
+              <Route path="mainOld" component={MainOld} />
               <Route path="destination" component={Destination} />
               <Route path="waiting" component={Waiting} />
               <Route path="boarding" component={Boarding} />

@@ -2,7 +2,7 @@
  * @author Anthony Altieri on 11/1/16.
  */
 
-const SERVER_PREFIX = 'http://35.161.34.206';
+const SERVER_PREFIX = 'https://regi';
 const LOCAL_PREFIX = 'http://localhost:4040';
 
 export const send = (type, url, params = {}, withCredentials = true) => {

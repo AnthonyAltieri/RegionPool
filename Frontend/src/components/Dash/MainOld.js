@@ -7,37 +7,34 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { toastr } from 'react-redux-toastr';
 import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
-import LocationLoader from '../Maps/LocationLoader';
-import * as LoadingActions from '../../actions/Loading';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import * as UserActions from '../../actions/User';
-import { lightBlue500 } from '../../../node_modules/material-ui/styles/colors';
-import MainMap from '../Maps/MainMap';
+import MainMap from '../Maps/MainMapOld';
 
 class Main extends Component {
   componentDidMount() {
     const {
       retrievedCurrentLocation,
       userId,
-      goToLogin,
-      startLoading,
-      stopLoading,
+      goToLogin
     } = this.props;
     if (typeof userId === 'undefined') {
       toastr.info('You must log in to use our service');
       goToLogin();
     }
-    console.log('navigator.geolocation', navigator.geolocation);
 
-    if (!!navigator.geolocation) {
-      console.log('startLoading()')
-      startLoading();
-    } else {
-      // TODO: Fix the temporary solution
-      toastr.error('You do not have a browser that support location,' +
-        'you must use a browser that does to use this application.');
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        retrievedCurrentLocation(
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+      });
+      return;
     }
+    // TODO: Fix the temporary solution
+    toastr.error('You do not have a browser that support location,' +
+      'you must use a browser that does to use this application.');
 
   }
 
@@ -47,13 +44,11 @@ class Main extends Component {
       currentLocationInterval,
       isInPickupZone,
       setLocationStatus,
-      setCurrentZone,
-      isLoadingCurrentPosition,
-      stopLoading
+      setCurrentZone
     } = this.props;
+
     return (
       <div className="main fullscreen">
-        {!!isLoadingCurrentPosition ? <LocationLoader isVisible /> : null}
         <MainMap
           lat={curLat}
           lng={curLong}
@@ -61,34 +56,31 @@ class Main extends Component {
           currentLocationInterval={currentLocationInterval}
           setLocationStatus={setLocationStatus}
           setCurrentZone={setCurrentZone}
-          stopLoading={stopLoading}
         />
         <div
           className="box-info"
           style={{
-            backgroundColor: !isLoadingCurrentPosition && !!isInPickupZone
-              ? "#66BB6A" : '#dddddd',
+            backgroundColor: !!isInPickupZone ? "#76FF03" : '#eeeeee',
           }}
         >
-          {!isLoadingCurrentPosition && !!isInPickupZone
-            ? <p>Choose destination</p>
-            : <p>Go to a pick up region</p>
+          {!!isInPickupZone
+            ? <p>You are inside a pick up region</p>
+            : <p>You are outside of a pick up region, get to one to choose destination</p>
           }
         </div>
-        {!isLoadingCurrentPosition && !!isInPickupZone
-          ? <RaisedButton
+        {isInPickupZone
+          ? <FloatingActionButton
             style={{
               position: "absolute",
               bottom: "64px",
-              right: "52px",
+              right: "42px",
             }}
-            label="PICK DESTINATION"
-            primary
             onClick={() => {
               goToDashDestination();
             }}
           >
-          </RaisedButton>
+            <FontIcon className="material-icons">directions_bus</FontIcon>
+          </FloatingActionButton>
           : null
         }
       </div>
@@ -102,7 +94,6 @@ const stateToProps = (state) => ({
   currentLocationInterval: state.User.currentLocationInterval,
   isInPickupZone: state.User.isInPickupZone,
   userId: state.User.id,
-  isLoadingCurrentPosition: !!state.Loading,
 });
 
 const dispatchToProps = (dispatch) => ({
@@ -126,13 +117,7 @@ const dispatchToProps = (dispatch) => ({
   },
   goToLogin: () => {
     dispatch(push('/login'))
-  },
-  startLoading: () => {
-    dispatch(LoadingActions.startLoading());
-  },
-  stopLoading: () => {
-    dispatch(LoadingActions.stopLoading())
-  },
+  }
 });
 
 Main = connect(
