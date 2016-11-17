@@ -3,7 +3,7 @@
  */
 
 const SERVER_PREFIX = 'https://regi';
-const LOCAL_PREFIX = 'http://localhost:4040';
+const SERVER_PREFIX = 'https://regionpool.xyz';
 
 export const send = (type, url, params = {}, withCredentials = true) => {
   return new Promise((resolve, reject) => {
@@ -11,8 +11,7 @@ export const send = (type, url, params = {}, withCredentials = true) => {
     if (type !== 'POST' && type !== 'GET') {
       throw new Error(`Invalid xmlhttp type ${type}`);
     }
-    console.log(`sending ${type} at ${LOCAL_PREFIX + url}`);
-    xmlhttp.open(type, LOCAL_PREFIX + url, true);
+    xmlhttp.open(type, SERVER_PREFIX + url, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xmlhttp.withCredentials = withCredentials;
     xmlhttp.onreadystatechange = () => {
