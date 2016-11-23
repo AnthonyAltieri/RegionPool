@@ -62,6 +62,7 @@ class Main extends Component {
           setLocationStatus={setLocationStatus}
           setCurrentZone={setCurrentZone}
           stopLoading={stopLoading}
+          isInPickupZone={isInPickupZone}
         />
         <div
           className="box-info"
@@ -85,6 +86,7 @@ class Main extends Component {
             label="PICK DESTINATION"
             primary
             onClick={() => {
+              ga('send', 'event', 'choosedestination', 'click');
               goToDashDestination();
             }}
           >

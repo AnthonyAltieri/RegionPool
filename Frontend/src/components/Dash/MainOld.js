@@ -44,7 +44,8 @@ class Main extends Component {
       currentLocationInterval,
       isInPickupZone,
       setLocationStatus,
-      setCurrentZone
+      setCurrentZone,
+      isInPickupZone,
     } = this.props;
 
     return (
@@ -56,6 +57,7 @@ class Main extends Component {
           currentLocationInterval={currentLocationInterval}
           setLocationStatus={setLocationStatus}
           setCurrentZone={setCurrentZone}
+          isInPickupZone={isInPickupZone}
         />
         <div
           className="box-info"
@@ -76,6 +78,7 @@ class Main extends Component {
               right: "42px",
             }}
             onClick={() => {
+              ga('send', 'event', 'choosedestination', 'click');
               goToDashDestination();
             }}
           >
