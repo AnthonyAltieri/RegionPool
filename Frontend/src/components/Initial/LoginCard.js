@@ -191,7 +191,12 @@ const dispatchToProps = (dispatch) => ({
     // if (hasValidCredentials(email, password)) {
     // }
     dispatch(UserActions.loggedIn(id, firstName, lastName));
-    dispatch(push('/dash/main'));
+    const time = new Date().getTime();
+    if (time % 2 === 0) {
+      dispatch(push('/dash/main'));
+    } else {
+      dispatch(push('/dash/mainOld'));
+    }
   },
   showDialog: () => {
     dispatch(LoginActions.showDialog());

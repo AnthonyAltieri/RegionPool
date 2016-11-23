@@ -71,7 +71,8 @@ const handleCurrentLocation = (
   polyObj,
   setLocationStatus,
   setCurrentZone,
-  stopLoading
+  stopLoading,
+  isInPickupZone,
 ) => {
   const IS_IN_PICKUP_ZONE = true;
   const NOT_IN_PICKUP_ZONE = false;
@@ -95,6 +96,11 @@ const handleCurrentLocation = (
       .then((alwaysTrue) => {
         stopLoading();
         if (!!zoneName) {
+          // If first time in pickup region send ga event
+          if (!isInPickupZone) {
+            ga('send', 'event', 'regionentered', 'enter')
+
+          }
           setLocationStatus(IS_IN_PICKUP_ZONE);
           setCurrentZone(zoneName);
         } else {
@@ -114,6 +120,7 @@ class MainMap extends Component {
       setLocationStatus,
       setCurrentZone,
       stopLoading,
+      isInPickupZone,
     } = this.props;
     var map;
     var currentLocMarker;
@@ -138,6 +145,7 @@ class MainMap extends Component {
             setLocationStatus,
             setCurrentZone,
             stopLoading,
+            isInPickupZone,
           )
         }, ONE_SECOND);
       setCurrentLocationInterval(currentLocationInterval);
