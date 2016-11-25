@@ -38,6 +38,12 @@ class Main extends Component {
         'you must use a browser that does to use this application.');
 
     }
+    const googleMapsApiInterval = setInterval(() => {
+      if (!typeof google === 'undefined') {
+        stopLoading();
+        clearInterval(googleMapsApiInterval)
+      }
+    }, 1000)
 
   }
 
@@ -53,17 +59,19 @@ class Main extends Component {
     } = this.props;
     return (
       <div className="main fullscreen">
-        {!!isLoadingCurrentPosition ? <LocationLoader isVisible /> : null}
-        <MainMap
-          lat={curLat}
-          lng={curLong}
-          setCurrentLocationInterval={setCurrentLocationInterval}
-          currentLocationInterval={currentLocationInterval}
-          setLocationStatus={setLocationStatus}
-          setCurrentZone={setCurrentZone}
-          stopLoading={stopLoading}
-          isInPickupZone={isInPickupZone}
-        />
+        {!!isLoadingCurrentPosition
+          ? <LocationLoader isVisible />
+          : <MainMap
+            lat={curLat}
+            lng={curLong}
+            setCurrentLocationInterval={setCurrentLocationInterval}
+            currentLocationInterval={currentLocationInterval}
+            setLocationStatus={setLocationStatus}
+            setCurrentZone={setCurrentZone}
+            stopLoading={stopLoading}
+            isInPickupZone={isInPickupZone}
+          />
+        }
         <div
           className="box-info"
           style={{

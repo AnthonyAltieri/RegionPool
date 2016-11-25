@@ -91,7 +91,6 @@ const handleCurrentLocation = (
     }
     handleLocationWithPolygons(polyObj, lat, lng)
       .then((zoneName) => {
-        stopLoading();
         if (!!zoneName) {
           setLocationStatus(IS_IN_PICKUP_ZONE);
           setCurrentZone(zoneName);
