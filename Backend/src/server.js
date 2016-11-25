@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', 'http://regionpool.xyz');
+  res.setHeader('Access-Control-Allow-Origin', 'https://regionpool.xyz');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, *');
   next();
@@ -81,99 +81,6 @@ app.post('/data.json', (req, res) => {
 });
 
 
-// For A/B test
-app.get('/dash/main', (req, res) => {
-  const html = `
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Google Analytics Content Experiment code -->
-<script>function utmx_section(){}function utmx(){}(function(){var
-k='128753037-0',d=document,l=d.location,c=d.cookie;
-if(l.search.indexOf('utm_expid='+k)>0)return;
-function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
-indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
-length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
-'<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
-'://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
-'&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
-valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
-'" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
-</script><script>utmx('url','A/B');</script>
-<!-- End of Google Analytics Content Experiment code -->
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-87922603-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
-    <!-- @author Anthony Altieri -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDCC8dfErgORDAlxl7_fwOmgPzA_qsJd6g&callback=initMap">
-    </script>
-    <title>RegionPool</title>
-    <link href="https://fonts.googleapis.com/css?family=Courgette|Rubik:300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-
-</head>
-<body class="fullscreen">
-<div id="root"></div>
-<script>
-  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.state)}
-</script>
-<script src="/static/app.bundle.js"></script>
-</body>
-</html>
-`
-  res.send(html);
-});
-
-app.get('/dash/mainOld', (req, res) => {
-  const html = `
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-87922603-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
-    <!-- @author Anthony Altieri -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDCC8dfErgORDAlxl7_fwOmgPzA_qsJd6g&callback=initMap">
-    </script>
-    <title>RegionPool</title>
-    <link href="https://fonts.googleapis.com/css?family=Courgette|Rubik:300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-
-</head>
-<body class="fullscreen">
-<div id="root"></div>
-<script>
-  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.state)}
-</script>
-<script src="/static/app.bundle.js"></script>
-</body>
-</html>
-`
-  res.send(html);
-});
-
 app.get('/*', (req, res) => {
   console.log('__dirname', __dirname);
   console.log(path.join(__dirname, '../../Frontend/index.html'));
@@ -182,11 +89,6 @@ app.get('/*', (req, res) => {
 
 const UserRouter = require('./routers/User');
 app.use('/api/user', UserRouter);
-app.post('/api/state/save', (req, res) => {
-  const { state } = req.body;
-  req.session.state = state;
-  res.send({ success: true });
-});
 
 server.listen(ports[1]);
 

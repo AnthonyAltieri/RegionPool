@@ -42,7 +42,7 @@ let LoginCard = ({
   isDialogOpen,
   showDialog,
   hideDialog,
-  state,
+  navigate,
 }) => {
   let email;
   let password;
@@ -150,14 +150,24 @@ let LoginCard = ({
                     firstName,
                     lastName
                   );
-                  post('/api/state/save', { state })
-                    .then((isNull) => {
-                      document.location = 'https://regionpool.xyz/dash/main';
-                    })
-                    .catch((error) => {
-                      console.log('error', error);
-                      toastr.error('Server Error please try again');
-                    });
+                  const chosenVariation = cxApi.chooseVariation();
+                  switch (chosenVariation) {
+                    case 0: {
+                      ga('send', 'event', 'usingversion', 'A')
+                      navigate('/dash/main');
+                      return;
+                    }
+
+                    case 1: {
+                      ga('send', 'event', 'usingversion', 'B')
+                      navigate('/dash/mainOld');
+                      return;
+                    }
+
+                    default: {
+                      throw new Error(`Invalid chosenVariation: ${chosenVariation}`);
+                    }
+                  }
                 })
                 .catch((error) => {
                   console.log('error', error);
