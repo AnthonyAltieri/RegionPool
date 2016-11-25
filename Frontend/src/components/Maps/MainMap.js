@@ -71,17 +71,14 @@ const handleCurrentLocation = (
   polyObj,
   setLocationStatus,
   setCurrentZone,
-  stopLoading,
-  isInPickupZone,
+  stopLoading
 ) => {
   const IS_IN_PICKUP_ZONE = true;
   const NOT_IN_PICKUP_ZONE = false;
   console.log('handleCUrrentLocation')
   navigator.geolocation.getCurrentPosition((position) => {
-    // let lat = position.coords.latitude;
-    // let lng = position.coords.longitude;
-    let lat = 32.869776;
-    let lng = -117.232334;
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
     if (!marker) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -92,15 +89,10 @@ const handleCurrentLocation = (
     } else {
       marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
     }
-    const zoneName = handleLocationWithPolygons(polyObj, lat, lng)
-      .then((alwaysTrue) => {
+    handleLocationWithPolygons(polyObj, lat, lng)
+      .then((zoneName) => {
         stopLoading();
         if (!!zoneName) {
-          // If first time in pickup region send ga event
-          if (!isInPickupZone) {
-            ga('send', 'event', 'regionentered', 'enter')
-
-          }
           setLocationStatus(IS_IN_PICKUP_ZONE);
           setCurrentZone(zoneName);
         } else {
@@ -120,7 +112,6 @@ class MainMap extends Component {
       setLocationStatus,
       setCurrentZone,
       stopLoading,
-      isInPickupZone,
     } = this.props;
     var map;
     var currentLocMarker;
@@ -145,7 +136,6 @@ class MainMap extends Component {
             setLocationStatus,
             setCurrentZone,
             stopLoading,
-            isInPickupZone,
           )
         }, ONE_SECOND);
       setCurrentLocationInterval(currentLocationInterval);

@@ -20,7 +20,7 @@ export const handleLocationWithPolygons = (polyObj, lat, lng) => {
           strokeColor: '#4CAF50',
           fillColor: '#4CAF50',
         });
-        return polyObj[k].name
+        resolve(polyObj[k].name)
       } else {
         polyObj[k].setOptions({
           strokeColor: '#FF0000',
@@ -28,6 +28,6 @@ export const handleLocationWithPolygons = (polyObj, lat, lng) => {
         });
       }
     });
-    resolve(true);
+    resolve(null);
   });
 }

@@ -16,6 +16,7 @@
     "jsonfile": "^2.4.0",
     "mongoose": "latest",
     "node-uuid": "^1.4.7",
+    "nodemailer": "^2.6.4",
     "react": "^15.3.2"
   },
   "devDependencies": {
