@@ -25,7 +25,7 @@ const addLoggingToDispatch = (store) => {
 
 
 const configureStore = () => {
-  const persistedState = loadState();
+  const persistedState = window.__PRELOADED_STATE__ || loadState();
   const store = createStore(
     Root,
     persistedState,
