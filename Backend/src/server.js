@@ -126,7 +126,7 @@ valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
 <body class="fullscreen">
 <div id="root"></div>
 <script>
-  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.store)}
+  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.state)}
 </script>
 <script src="/static/app.bundle.js"></script>
 </body>
@@ -165,7 +165,7 @@ app.get('/dash/mainOld', (req, res) => {
 <body class="fullscreen">
 <div id="root"></div>
 <script>
-  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.store)}
+  window.__PRELOADED_STATE__ = ${JSON.stringify(req.session.state)}
 </script>
 <script src="/static/app.bundle.js"></script>
 </body>
@@ -183,8 +183,8 @@ app.get('/*', (req, res) => {
 const UserRouter = require('./routers/User');
 app.use('/api/user', UserRouter);
 app.post('/api/store/save', (req, res) => {
-  const { store } = req.body;
-  req.session.store = store;
+  const { state } = req.body;
+  req.session.state = state;
   res.end();
 });
 

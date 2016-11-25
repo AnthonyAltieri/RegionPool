@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { toastr } from 'react-redux-toastr';
 import { logIn } from '../../api/User';
+import { post } from '../../api/Ajax';
 import * as LoginActions from '../../actions/Login'
 import * as UserActions from '../../actions/User';
 import { forgotPassword } from '../../api/User';
@@ -41,6 +42,7 @@ let LoginCard = ({
   isDialogOpen,
   showDialog,
   hideDialog,
+  state,
 }) => {
   let email;
   let password;
@@ -148,6 +150,14 @@ let LoginCard = ({
                     firstName,
                     lastName
                   );
+                  post('/api/state/save', { state })
+                    .then((isNull) => {
+                      document.location = 'https://regionpool.xyz/dash/main';
+                    })
+                    .catch((error) => {
+                      console.log('error', error);
+                      toastr.error('Server Error please try again');
+                    });
                 })
                 .catch((error) => {
                   console.log('error', error);
@@ -182,6 +192,7 @@ let LoginCard = ({
 
 const stateToProps = (state) => ({
   isDialogOpen: !!state.Login.isDialogeOpen,
+  state,
 });
 const dispatchToProps = (dispatch) => ({
   goToSignup: () => {
@@ -191,12 +202,6 @@ const dispatchToProps = (dispatch) => ({
     // if (hasValidCredentials(email, password)) {
     // }
     dispatch(UserActions.loggedIn(id, firstName, lastName));
-    const time = new Date().getTime();
-    if (time % 2 === 0) {
-      dispatch(push('/dash/main'));
-    } else {
-      dispatch(push('/dash/mainOld'));
-    }
   },
   showDialog: () => {
     dispatch(LoginActions.showDialog());
