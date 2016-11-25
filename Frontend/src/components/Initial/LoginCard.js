@@ -218,7 +218,10 @@ const dispatchToProps = (dispatch) => ({
   },
   hideDialog: () => {
     dispatch(LoginActions.hideDialog());
-  }
+  },
+  navigate: (url) => {
+    dispatch(push(url));
+  },
 });
 
 LoginCard = connect(
