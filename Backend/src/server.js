@@ -182,10 +182,10 @@ app.get('/*', (req, res) => {
 
 const UserRouter = require('./routers/User');
 app.use('/api/user', UserRouter);
-app.post('/api/store/save', (req, res) => {
+app.post('/api/state/save', (req, res) => {
   const { state } = req.body;
   req.session.state = state;
-  res.end();
+  res.send({ success: true });
 });
 
 server.listen(ports[1]);
