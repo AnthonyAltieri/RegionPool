@@ -25,7 +25,6 @@ class Main extends Component {
       toastr.info('You must log in to use our service');
       goToLogin();
     }
-    startLoading();
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -40,12 +39,6 @@ class Main extends Component {
     toastr.error('You do not have a browser that support location,' +
       'you must use a browser that does to use this application.');
 
-    const googleMapsApiInterval = setInterval(() => {
-      if (!typeof google === 'undefined') {
-        stopLoading();
-        clearInterval(googleMapsApiInterval)
-      }
-    }, 1000)
   }
 
   render() {
@@ -61,9 +54,7 @@ class Main extends Component {
 
     return (
       <div className="main fullscreen">
-        {!!isLoading
-          ? <h1>Loading map</h1>
-          : <MainMap
+        <MainMap
             lat={curLat}
             lng={curLong}
             setCurrentLocationInterval={setCurrentLocationInterval}
@@ -72,8 +63,6 @@ class Main extends Component {
             setCurrentZone={setCurrentZone}
             isInPickupZone={isInPickupZone}
           />
-        }
-
         <div
           className="box-info"
           style={{
