@@ -123,7 +123,7 @@ let LoginCard = ({
           label={'Submit'}
           onClick={() => {
             if (hasValidCredentials(email, password, firstName, lastName)) {
-              signUp(email, password, firstName, lastName)
+              signUp(email.toLowerCase(), password, firstName, lastName)
                 .then((payload) => {
                   const { error, inUse, id, firstName, lastName } = payload;
                   if (!!error) {

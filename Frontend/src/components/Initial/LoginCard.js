@@ -137,7 +137,7 @@ let LoginCard = ({
           onClick={() => {
             console.log('on click')
             if (hasValidCredentials(email, password)) {
-              logIn(email, password)
+              logIn(email.toLowerCase(), password)
                 .then((payload) => {
                   const { notFound, id, firstName, lastName } = payload;
                   console.log('payload', payload);
