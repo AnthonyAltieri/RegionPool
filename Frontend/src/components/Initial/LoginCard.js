@@ -151,23 +151,7 @@ let LoginCard = ({
                     lastName
                   );
                   const chosenVariation = cxApi.chooseVariation();
-                  switch (chosenVariation) {
-                    case 0: {
-                      ga('send', 'event', 'usingversion', 'A')
-                      navigate('/dash/main');
-                      return;
-                    }
-
-                    case 1: {
-                      ga('send', 'event', 'usingversion', 'B')
-                      navigate('/dash/mainOld');
-                      return;
-                    }
-
-                    default: {
-                      throw new Error(`Invalid chosenVariation: ${chosenVariation}`);
-                    }
-                  }
+                  navigate('/dash/main');
                 })
                 .catch((error) => {
                   console.log('error', error);
