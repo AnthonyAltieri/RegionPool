@@ -172,9 +172,16 @@ class Payment extends Component {
   }
 };
 
+const convertToStars = (creditCardNumber) => {
+  const blocks = creditCardNumber.split(' ')
+  return '**** **** **** ' + blocks[blocks.length - 1];
+};
+
 const stateToProps = (state) => ({
   userId: state.User.id,
-  creditCard: state.User.creditCard || null,
+  creditCard: state.User.creditCard
+    ? convertToStars(state.User.creditCard)
+    : null,
 });
 
 const dispatchToProps = (dispatch) => ({

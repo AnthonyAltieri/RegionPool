@@ -98,6 +98,7 @@ const handleCurrentLocation = (
           setLocationStatus(NOT_IN_PICKUP_ZONE)
         }
     })
+    return marker;
   });
 };
 
@@ -127,15 +128,23 @@ class MainMap extends Component {
         polygons = [...polygons, polygon];
         polygon.setMap(map);
       });
+      const marker = handleCurrentLocation(
+          map,
+          null, // marker
+          polyObj,
+          setLocationStatus,
+          setCurrentZone,
+          stopLoading,
+        );
       const currentLocationInterval = window.setInterval(() => {
-          handleCurrentLocation(
-            map,
-            null, // marker
-            polyObj,
-            setLocationStatus,
-            setCurrentZone,
-            stopLoading,
-          )
+        handleCurrentLocation(
+          map,
+          marker,
+          polyObj,
+          setLocationStatus,
+          setCurrentZone,
+          stopLoading,
+        )
         }, ONE_SECOND);
       setCurrentLocationInterval(currentLocationInterval);
     }
