@@ -71,7 +71,8 @@ const handleCurrentLocation = (
   polyObj,
   setLocationStatus,
   setCurrentZone,
-  stopLoading
+  stopLoading,
+  firstTime,
 ) => {
   const IS_IN_PICKUP_ZONE = true;
   const NOT_IN_PICKUP_ZONE = false;
@@ -79,7 +80,7 @@ const handleCurrentLocation = (
   navigator.geolocation.getCurrentPosition((position) => {
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
-    if (!marker) {
+    if (firstTime) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
         map,
@@ -135,6 +136,7 @@ class MainMap extends Component {
           setLocationStatus,
           setCurrentZone,
           stopLoading,
+          true,
         );
       const currentLocationInterval = window.setInterval(() => {
         handleCurrentLocation(
@@ -144,6 +146,7 @@ class MainMap extends Component {
           setLocationStatus,
           setCurrentZone,
           stopLoading,
+          false,
         )
         }, ONE_SECOND);
       setCurrentLocationInterval(currentLocationInterval);
