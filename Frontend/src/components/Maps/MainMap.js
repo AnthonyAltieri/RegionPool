@@ -65,6 +65,39 @@ const regions = [
   }
 ];
 
+const promiseWrapper = (
+  map,
+  polyObj,
+  setLocationStatus,
+  setCurrentZone,
+  stopLoading,
+  markerSet,
+) => {
+  return new Promise((resolve, reject) => {
+    const IS_IN_PICKUP_ZONE = true;
+    const NOT_IN_PICKUP_ZONE = false;
+    navigator.geolocation.getCurrentPosition((position) => {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map,
+      });
+      marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
+      map.panTo(new google.maps.LatLng(lat , lng));
+      markerSet();
+      handleLocationWithPolygons(polyObj, lat, lng)
+        .then((zoneName) => {
+          if (!!zoneName) {
+            setLocationStatus(IS_IN_PICKUP_ZONE);
+            setCurrentZone(zoneName);
+          } else {
+            setLocationStatus(NOT_IN_PICKUP_ZONE)
+          }
+          resolve({ marker });
+        })
+    });
+  });
+};
+
 const handleCurrentLocation = (
   map,
   marker,
@@ -80,16 +113,7 @@ const handleCurrentLocation = (
   navigator.geolocation.getCurrentPosition((position) => {
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
-    if (firstTime) {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map,
-      });
-      marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
-      map.panTo(new google.maps.LatLng(lat , lng));
-    } else {
-      marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
-    }
+    marker.setPosition(new google.maps.LatLng(lat || 32.871810, lng || -117.234912));
     handleLocationWithPolygons(polyObj, lat, lng)
       .then((zoneName) => {
         if (!!zoneName) {
@@ -99,7 +123,6 @@ const handleCurrentLocation = (
           setLocationStatus(NOT_IN_PICKUP_ZONE)
         }
     })
-    return marker;
   });
 };
 
@@ -113,6 +136,7 @@ class MainMap extends Component {
       setLocationStatus,
       setCurrentZone,
       stopLoading,
+      markerSet,
     } = this.props;
     var map;
     var currentLocMarker;
@@ -129,27 +153,31 @@ class MainMap extends Component {
         polygons = [...polygons, polygon];
         polygon.setMap(map);
       });
-      const marker = handleCurrentLocation(
-          map,
-          null, // marker
-          polyObj,
-          setLocationStatus,
-          setCurrentZone,
-          stopLoading,
-          true,
-        );
-      const currentLocationInterval = window.setInterval(() => {
-        handleCurrentLocation(
-          map,
-          marker,
-          polyObj,
-          setLocationStatus,
-          setCurrentZone,
-          stopLoading,
-          false,
-        )
-        }, ONE_SECOND);
-      setCurrentLocationInterval(currentLocationInterval);
+      promiseWrapper(
+        map,
+        polyObj,
+        setLocationStatus,
+        setCurrentZone,
+        stopLoading,
+        markerSet,
+      )
+        .then(({ marker }) => {
+          const currentLocationInterval = window.setInterval(() => {
+            handleCurrentLocation(
+              map,
+              marker,
+              polyObj,
+              setLocationStatus,
+              setCurrentZone,
+              stopLoading,
+              false,
+            )
+          }, ONE_SECOND);
+          setCurrentLocationInterval(currentLocationInterval);
+        })
+        .catch((error) => {
+          console.error('init map error', error);
+        })
     }
     initMap();
   }

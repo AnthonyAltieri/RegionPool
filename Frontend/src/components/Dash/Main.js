@@ -55,7 +55,10 @@ class Main extends Component {
       setLocationStatus,
       setCurrentZone,
       isLoadingCurrentPosition,
-      stopLoading
+      stopLoading,
+      markerSet,
+      markerClear,
+      isMarkerSet,
     } = this.props;
     return (
       <div className="main fullscreen">
@@ -70,6 +73,7 @@ class Main extends Component {
             setCurrentZone={setCurrentZone}
             stopLoading={stopLoading}
             isInPickupZone={isInPickupZone}
+            markerSet={markerSet}
           />
         }
         <div
@@ -79,12 +83,12 @@ class Main extends Component {
               ? "#66BB6A" : '#dddddd',
           }}
         >
-          {!isLoadingCurrentPosition && !!isInPickupZone
+          {!isLoadingCurrentPosition && !!isInPickupZone && isMarkerSet
             ? <p>Choose destination</p>
             : <p>Go to a pick up region</p>
           }
         </div>
-        {!isLoadingCurrentPosition && !!isInPickupZone
+        {!isLoadingCurrentPosition && !!isInPickupZone && isMarkerSet
           ? <RaisedButton
             style={{
               position: "absolute",
@@ -96,6 +100,7 @@ class Main extends Component {
             onClick={() => {
               ga('send', 'event', 'choosedestination', 'click');
               goToDashDestination();
+              markerClear();
             }}
           >
           </RaisedButton>
@@ -112,6 +117,7 @@ const stateToProps = (state) => ({
   currentLocationInterval: state.User.currentLocationInterval,
   isInPickupZone: state.User.isInPickupZone,
   userId: state.User.id,
+  isMarkerSet: !!state.User.isMarkerSet,
   isLoadingCurrentPosition: !!state.Loading,
 });
 
@@ -142,6 +148,12 @@ const dispatchToProps = (dispatch) => ({
   },
   stopLoading: () => {
     dispatch(LoadingActions.stopLoading())
+  },
+  markerSet: () => {
+    dispatch(UserActions.markerSet());
+  },
+  markerClear: () => {
+    dispatch(UserActions.markerClear());
   },
 });
 

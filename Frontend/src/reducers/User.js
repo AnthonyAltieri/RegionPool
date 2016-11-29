@@ -14,6 +14,20 @@ const User = (state = {}, action) => {
       }
     }
 
+    case 'MARKER_SET': {
+      return {
+        ...state,
+        isMarkerSet: true,
+      }
+    }
+
+    case 'MARKER_CLEAR': {
+      return {
+        ...state,
+        isMarkerSet: false,
+      }
+    }
+
     case 'RETRIEVED_CURRENT_LOCATION': {
       return {
         ...state,

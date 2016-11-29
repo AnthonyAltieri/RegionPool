@@ -46,3 +46,11 @@ export const setCurrentLocationInterval = (interval) => ({
   type: 'SET_CURRENT_LOCATION_INTERVAL',
   interval,
 })
+
+export const markerClear = () => ({
+  type: 'MARKER_CLEAR',
+});
+
+export const markerSet = () => ({
+  type: 'MARKER_SET',
+});
